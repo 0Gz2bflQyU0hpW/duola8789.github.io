@@ -1,0 +1,2043 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=6.7.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=6.7.0">
+
+
+  <link rel="mask-icon" href="/images/logo-new.svg?v=6.7.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.7.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="想用Umi.js，发现Dva不了解，学习Dva，发现应该懂一些Redux-Saga，所以花了几天时间搞清楚Redux-Saga的基本原理，这就是我的学习笔记。">
+<meta name="keywords" content="React,Redux,Redux-Saga">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redux05 Redux-Saga">
+<meta property="og:url" content="http://oldzhou.cn/2019/12/20/01 前端笔记/06 Redux/Redux05 Redux-Saga/index.html">
+<meta property="og:site_name" content="不负好时光">
+<meta property="og:description" content="想用Umi.js，发现Dva不了解，学习Dva，发现应该懂一些Redux-Saga，所以花了几天时间搞清楚Redux-Saga的基本原理，这就是我的学习笔记。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://image.oldzhou.cn/FgCdgP1vJquVZ5e-s9NfOUDyy-MD">
+<meta property="og:image" content="http://image.oldzhou.cn/Ft8720_Zbk2J81vAfPyBZ1-9SXRr">
+<meta property="og:updated_time" content="2019-12-20T08:51:49.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Redux05 Redux-Saga">
+<meta name="twitter:description" content="想用Umi.js，发现Dva不了解，学习Dva，发现应该懂一些Redux-Saga，所以花了几天时间搞清楚Redux-Saga的基本原理，这就是我的学习笔记。">
+<meta name="twitter:image" content="http://image.oldzhou.cn/FgCdgP1vJquVZ5e-s9NfOUDyy-MD">
+
+
+
+
+
+
+  <link rel="canonical" href="http://oldzhou.cn/2019/12/20/01 前端笔记/06 Redux/Redux05 Redux-Saga/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Redux05 Redux-Saga | 不负好时光</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">不负好时光</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">没什么才华，就剩一点坚持</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="http://www.oldzhou.cn/pages/page1.html" rel="noopener" target="_blank"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://oldzhou.cn/2019/12/20/01 前端笔记/06 Redux/Redux05 Redux-Saga/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="哆啦斯基周">
+      <meta itemprop="description" content="一个大龄前端程序员的技术博客">
+      <meta itemprop="image" content="/images/avatar3.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负好时光">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Redux05 Redux-Saga
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+         
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-12-20 16:51:49" itemprop="dateCreated datePublished" datetime="2019-12-20T16:51:49+08:00">2019-12-20</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Redux/" itemprop="url" rel="index"><span itemprop="name">Redux</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/12/20/01 前端笔记/06 Redux/Redux05 Redux-Saga/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2019/12/20/01 前端笔记/06 Redux/Redux05 Redux-Saga/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>想用Umi.js，发现Dva不了解，学习Dva，发现应该懂一些Redux-Saga，所以花了几天时间搞清楚Redux-Saga的基本原理，这就是我的学习笔记。</p>
+<a id="more"></a>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><code>redux-saga</code>是用来管理应用程序副作用的库，可以认为，一个saga就像是应用程序中一个单独的线程，独自负责处理副作用。</p>
+<p><code>redux-saga</code>是一个Redux中间件，也就意味着这个线程可以通过正常的Redux的Action从主应用启动暂停和取消，它能够访问完整的Redux的State，也可以进行<code>dispatch</code></p>
+<p><code>redux-saga</code>使用了<a href="http://es6.ruanyifeng.com/#docs/generator" target="_blank" rel="noopener">Generator</a>，让异步流程看起来像是同步代码，有更强大的异步流程控制能力。</p>
+<h2 id="Hello-Saga"><a href="#Hello-Saga" class="headerlink" title="Hello Saga"></a>Hello Saga</h2><p>安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm install --save redux-saga</span><br><span class="line"><span class="comment"># 或者</span></span><br><span class="line">yarn add redux-saga</span><br></pre></td></tr></table></figure>
+<p>创建<code>sagas.js</code>文件，我们的异步逻辑都会包含在这个文件中：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// sagas/index.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span>* <span class="title">helloSaga</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'Hello Sagas!'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Redux-Saga是一个中间件，我们需要建立它与Redux Store的联系，在<code>store/configureStore.js</code>中对<code>store</code>进行配置，注入中间件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// store/configureStore.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; createStore, applyMiddleware &#125; <span class="keyword">from</span> <span class="string">'redux'</span>;</span><br><span class="line"><span class="keyword">import</span> rootReducer <span class="keyword">from</span> <span class="string">'./reducers/index'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用 redux-saga 中间件</span></span><br><span class="line"><span class="keyword">import</span> createSagaMiddleware <span class="keyword">from</span> <span class="string">'redux-saga'</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">configureStore</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 创建 redux-saga 中间件</span></span><br><span class="line">  <span class="keyword">const</span> sagaMiddleware = createSagaMiddleware();</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="comment">// 创建 Store，并注入中间件</span></span><br><span class="line">    ...createStore(rootReducer, applyMiddleware(sagaMiddleware)),</span><br><span class="line">    runSaga: sagaMiddleware.run,</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>导出的<code>store</code>可以在<code>main.js</code>中或者<code>store/index.js</code>中进行实例化，执行挂载的中间件的初始化：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// store/index.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> configureStore <span class="keyword">from</span> <span class="string">'@/store/configureStore'</span>;</span><br><span class="line"><span class="keyword">import</span> rootSaga <span class="keyword">from</span> <span class="string">'@/sagas'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 对 Store 进行配置</span></span><br><span class="line"><span class="keyword">const</span> store = configureStore();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化 redux-saga 中间件，注入我们的 mySaga 文件</span></span><br><span class="line"><span class="comment">// 需要在创建 store 后才能运行</span></span><br><span class="line">store.runSaga(rootSaga);</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> store;</span><br></pre></td></tr></table></figure>
+<p>可以结合<code>react-redux</code>，使用<code>&lt;Provider&gt;</code>注入<code>store</code>，配合<code>connect</code>使用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// src/index.js</span><br><span class="line"></span><br><span class="line">import React from &apos;react&apos;;</span><br><span class="line">import ReactDOM from &apos;react-dom&apos;;</span><br><span class="line">import &#123; Provider &#125; from &apos;react-redux&apos;</span><br><span class="line">import App from &apos;./containers/App&apos;</span><br><span class="line">import store from &quot;./store&quot;;</span><br><span class="line"></span><br><span class="line">render(</span><br><span class="line">  &lt;Provider store=&#123;store&#125;&gt;</span><br><span class="line">    &lt;App /&gt;</span><br><span class="line">  &lt;/Provider&gt;,</span><br><span class="line">  document.getElementById(&apos;root&apos;),</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>也可以直接在需要的地方导入<code>store</code>，正式的项目中推荐前者。</p>
+<p>这样配置完成后，默认情况下就会打印出<code>Hello Sagas</code>。</p>
+<h2 id="异步调用"><a href="#异步调用" class="headerlink" title="异步调用"></a>异步调用</h2><p>实现这样的一个组件，有三个按钮，其中两个是同步任务，另外一个按钮是异步任务，点击之后1秒计数才会增加：</p>
+<p><img src="http://image.oldzhou.cn/FgCdgP1vJquVZ5e-s9NfOUDyy-MD" alt=""></p>
+<p>UI组件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">const Counter = (&#123; value, onIncrement, onDecrement, onIncrementAsync &#125;) =&gt; &#123;</span><br><span class="line">  return (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;h1&gt;Clicked: &#123;value&#125; times&lt;/h1&gt;</span><br><span class="line">      &lt;Button onClick=&#123;onIncrement&#125; className=&#123;style.countButton&#125;&gt;Increment&lt;/Button&gt;</span><br><span class="line">      &lt;Button onClick=&#123;onDecrement&#125; className=&#123;style.countButton&#125;&gt;Decrement&lt;/Button&gt;</span><br><span class="line">      &lt;Button onClick=&#123;onIncrementAsync&#125; className=&#123;style.countButton&#125;&gt;Increment after 1 second&lt;/Button&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>UI组件调用者需要通过Redux Store来获取数据、触发Action：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">import React, &#123; useEffect, useState &#125; from &apos;react&apos;;</span><br><span class="line">import store from &apos;../../../store&apos;;</span><br><span class="line"></span><br><span class="line">import &#123; Button &#125; from &apos;antd&apos;;</span><br><span class="line"></span><br><span class="line">export default function ReduxSaga() &#123;</span><br><span class="line">  const [count, setCount] = useState(store.getState().sagaCount);</span><br><span class="line"></span><br><span class="line">  const unsubscribe = store.subscribe(() =&gt; &#123;</span><br><span class="line">    setCount(store.getState().sagaCount);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  useEffect(() =&gt; &#123;</span><br><span class="line">    return unsubscribe;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  return (</span><br><span class="line">    &lt;Counter value=&#123;count&#125;</span><br><span class="line">             onIncrement=&#123;() =&gt; store.dispatch(&#123; type: &apos;INCREMENT&apos; &#125;)&#125;</span><br><span class="line">             onDecrement=&#123;() =&gt; store.dispatch(&#123; type: &apos;DECREMENT&apos; &#125;)&#125;</span><br><span class="line">             onIncrementAsync=&#123;() =&gt; store.dispatch(&#123; type: &apos;INCREMENT_ASYNC&apos; &#125;)&#125;&gt;</span><br><span class="line">    &lt;/Counter&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里没有使用React-Redux提供的<code>&lt;Provider&gt;</code>和<code>connect</code>来实现Store更新响应，而是使用了<code>subscribe</code>。</p>
+<p>在Reducer中：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; combineReducers &#125; <span class="keyword">from</span> <span class="string">'redux'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> sagaCount = <span class="function">(<span class="params">state = <span class="number">0</span>, action</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">switch</span> (action.type) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'INCREMENT'</span>: &#123;</span><br><span class="line">      <span class="keyword">return</span> state + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'DECREMENT'</span>: &#123;</span><br><span class="line">      <span class="keyword">return</span> state - <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">default</span>: &#123;</span><br><span class="line">      <span class="keyword">return</span> state;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> reducer = combineReducers(&#123;</span><br><span class="line">  sagaCount,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> reducer;</span><br></pre></td></tr></table></figure>
+<p>正常的同步任务会直接被<code>dispatch</code>到<code>Reducer</code>中，可以获得同步的<code>state</code>结果，但是异步任务对应的Action Type（<code>INCREMENT_ASYNC</code>）在Reducer中是没有定义的，因为异步任务由Redux-Saga接管。</p>
+<p>在<code>sagas.js</code>中，我们有了一个<code>helloSaga</code>的Generator函数，现在需要定义这个异步任务对应的方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; put, takeEvery &#125; <span class="keyword">from</span> <span class="string">'redux-saga/effects'</span>;</span><br><span class="line"><span class="keyword">const</span> delay = <span class="function"><span class="params">ms</span> =&gt;</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> setTimeout(resolve, ms));</span><br><span class="line"></span><br><span class="line"><span class="comment">// worker Saga：一个用来执行异步操作的 Generator 函数</span></span><br><span class="line"><span class="comment">// 执行异步任务，在 delay 结束后出发同步的 action</span></span><br><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">incrementAsync</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">yield</span> delay(<span class="number">1000</span>);</span><br><span class="line">  <span class="keyword">yield</span> put(&#123; <span class="attr">type</span>: <span class="string">'INCREMENT'</span> &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// watcher Saga: 在每个 INCREMENT_ASYNC 的 action 被 dispatch 时调用 worker Saga</span></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span>* <span class="title">watchIncrementAsync</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">yield</span> takeEvery(<span class="string">'INCREMENT_ASYNC'</span>, incrementAsync);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>前面提到了，Saga相当于系统的一个进程，而<code>watchIncrementAsync</code>就是这个进程中的一个监听器，它的作用是用来监听Type为<code>INCREMENT_ASYNC</code>的Action，当这个Action被触发时，就会执行这个Watcher中的代码。</p>
+<p>这个监听器需要在进程中被启动，实际上<code>sagaMiddleware.run</code>方法就是来执行所有的监听器，现在我们已经有了一个监听器<code>helloSaga</code>，要添加<code>watchIncrementAsync</code>，可以使用Redux-Saga内置的<code>all</code>方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span>* <span class="title">root</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">yield</span> all([</span><br><span class="line">    helloSaga(),</span><br><span class="line">    watchIncrementAsync(),</span><br><span class="line">  ]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>all</code>接受一个数组作为参数，数组中的Generator函数会同时启动，在<code>watchIncrementAsync</code>启动之后，执行了<code>takeEvery</code>方法，<code>takeEvery</code>也是Redux-Saga内置函数，用来监听所有的<code>INCREMENT_ASYNC</code>的Action，与<code>takeEvery</code>类似的是<code>takeLatest</code>方法，都是用来监听Action，二者的区别是：</p>
+<ul>
+<li><code>takeEvery</code>在每个对应的Action触发后，回调函数都会被执行，可以并发执行多个异步任务</li>
+<li><code>takeLatest</code>不允许并发，如果在之前已经有一个<code>INCREMENT_ASYNC</code>的Action在处理中，那么处理中的这个Action会被取消，执行当前的Action</li>
+</ul>
+<p>监听函数中执行的<code>incrementAsync</code>是实际执行异步任务的Generator函数，<code>delay</code>是一个异步函数，它会返回一个Promise到Redux-Saga中间件，阻塞Generator的执行，当1秒后，<code>delay</code>的Promise会被<code>resolve</code>，这是Generator会恢复执行，下一个<code>yield</code>后的<code>put</code>方法会被执行，发起Type为<code>INCREMENT</code>的Action。</p>
+<h2 id="Effect"><a href="#Effect" class="headerlink" title="Effect"></a>Effect</h2><p>Effect是具有副作用的函数，比如上面的异步操作。在Saga内触发的异步操作都是有<code>yield</code>一些声明式的Effect来完成的。</p>
+<p>一个Saga所做的实际上就是组合所有的Effect，实现对流程的控制。最简单情况就是把<code>yield</code>一个接一个的放置来顺序执行Effect，复杂的情况就是使用条件语句来实现复杂的控制流。</p>
+<p>使用Effect（例如<code>call</code>或者<code>put</code>）结合<code>takeEvery</code>，相比直接触发Promise（例如Redux-thunk），实现的结果是类似的，但是代码更清晰，同时更易于测试。</p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>由于每个Saga都是Generator函数，在每个<code>yield</code>都会停下，只有手动执行<code>next</code>才会向下执行，这就为我们提供了分步骤的对异步任务进行测试的能力。</p>
+<p>一个Generator函数执行的时候回返回一个Iterator Object，这个Iterator的<code>next</code>方法返回如下格式的对象：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gen.next() <span class="comment">// =&gt; &#123; done: boolean, value: any &#125;</span></span><br></pre></td></tr></table></figure>
+<p>例如下面这一个Generator函数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> a = <span class="keyword">yield</span> <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">yield</span> a + <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">999</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> gen = fn();</span><br><span class="line"></span><br><span class="line">gen.next(); <span class="comment">// &#123; value: 1, done: false &#125;</span></span><br><span class="line">gen.next(<span class="number">100</span>); <span class="comment">// &#123; value: 102, done: false &#125;</span></span><br><span class="line">gen.next(); <span class="comment">// &#123; value: 999, done: true &#125;</span></span><br></pre></td></tr></table></figure>
+<p>每一次的<code>next</code>返回值都是可测试的（注意，在Generator函数内部，<code>yield</code>本身是没有返回值的，它的作用是向函数外的<code>next()</code>传递<code>value</code>属性，而<code>next()</code>的参数才是想函数内部传递，作为上一步的<code>yield</code>的返回值）</p>
+<p>了解这一点后，可以对我们上面的<code>incrementAsync</code>进行测试：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">it(<span class="string">'incrementAsync Saga test '</span>, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> gen = incrementAsync();</span><br><span class="line"></span><br><span class="line">  expect(gen.next()).toEqual(&#123;<span class="attr">done</span>: <span class="literal">false</span>, <span class="attr">value</span>: <span class="comment">/*？？？*/</span> &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>现在关键点就是<code>value</code>的值是什么了，<code>delay(1000)</code>返回的是一个Promise，我们没有办法直接在Promise之间做简单的相等测试，所以需要Mock这个Promise的返回结果，mock的函数并不会真正发送Ajax请求或者执行其他异步操作，而是执行检查是否使用正确的参数调用了Promise的API。</p>
+<p>Mock使测试更加困难和不可靠，但是如果<code>dalay</code>返回的一个非Promise对象，那么事情就简单了。</p>
+<p><code>redux</code>提供了另一种方式，来代替直接返回Promise，那就是<code>call</code>方法，它与<code>delay</code>（以及其他直接返回Promise的方法）相比的不同之处在于：</p>
+<p>当执行<code>yield delay(1000)</code>时<code>yield</code>后的表达式在传递给<code>next</code>的调用者之前就被执行了，所以得到的是一个Promise。但是执行<code>yield call(delay, 1000)</code>时，<code>yield</code>后的表达式<code>call(dalay, 1000)</code>传递给<code>next</code>的调用者，它返回的是一个Effect，告诉Redux-Saga中间件将<code>1000</code>传递给<code>delay</code>。</p>
+<p>实际上，无论<code>call</code>还是<code>put</code>都会不执行任何<code>dispatch</code>或者异步调用，他们只是简单的返回一个对象</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">put(&#123; <span class="attr">type</span>: <span class="string">'INCREMENT'</span> &#125;) <span class="comment">// =&gt; &#123; PUT: &#123;type: 'INCREMENT'&#125; &#125;</span></span><br><span class="line">call(delay, <span class="number">1000</span>)        <span class="comment">// =&gt; &#123; CALL: &#123;fn: delay, args: [1000]&#125;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>中间件会检查每个被<code>yield</code>的Effect的类型，如果是<code>put</code>，那么中间件就<code>dispatch</code>一个Action到Store，如果是<code>call</code>那么就会调用传入的参数。</p>
+<p>这种把创建Effect和执行Effect执行分开的做法，让我们可以简单的测试Generator：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; incrementAsync &#125; <span class="keyword">from</span> <span class="string">'@/sagas'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; put, call &#125; <span class="keyword">from</span> <span class="string">'redux-saga/effects'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; delay &#125; <span class="keyword">from</span> <span class="string">'@/utils'</span>;</span><br><span class="line"></span><br><span class="line">it(<span class="string">'incrementAsync Saga test '</span>, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> gen = incrementAsync();</span><br><span class="line">  expect(gen.next()).toEqual(&#123; <span class="attr">done</span>: <span class="literal">false</span>, <span class="attr">value</span>: call(delay, <span class="number">1000</span>) &#125;);</span><br><span class="line">  expect(gen.next()).toEqual(&#123; <span class="attr">done</span>: <span class="literal">false</span>, <span class="attr">value</span>: put(&#123; <span class="attr">type</span>: <span class="string">'INCREMENT'</span> &#125;) &#125;);</span><br><span class="line">  expect(gen.next()).toEqual(&#123; <span class="attr">done</span>: <span class="literal">true</span> &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>至于<code>call(delay, 1000)</code>的结果是否正常，首先<code>call</code>方法应该是由<code>redux-saga</code>来保证的，我们只需要对<code>delay</code>方法进行单独测试即可</p>
+<h2 id="常用API"><a href="#常用API" class="headerlink" title="常用API"></a>常用API</h2><p>Redux-Saga提供了一些辅助函数，帮助我们轻松实现一些常用的功能：</p>
+<p>（1）<code>takeEvery</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">takeEvery(type, callback)</span><br></pre></td></tr></table></figure>
+<p>前面提到了，它是提供了类似<code>redux-thunk</code>的行为，简单来说就是当<code>type</code>的Action被<code>dispatch</code>时，去执行<code>callback</code>方法，相当于一个监听器。在每个对应的Action触发后，回调函数都会被执行，可以并发执行多个异步任务</p>
+<p>如果有多个Saga监视不同的Acteion，可以创建多个观察者：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; takeEvery &#125; <span class="keyword">from</span> <span class="string">'redux-saga/effects'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// FETCH_USERS</span></span><br><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">fetchUsers</span>(<span class="params">action</span>) </span>&#123; ... &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// CREATE_USER</span></span><br><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">createUser</span>(<span class="params">action</span>) </span>&#123; ... &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 同时使用它们</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span>* <span class="title">rootSaga</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">yield</span> takeEvery(<span class="string">'FETCH_USERS'</span>, fetchUsers)</span><br><span class="line">  <span class="keyword">yield</span> takeEvery(<span class="string">'CREATE_USER'</span>, createUser)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（2）<code>takeLatest</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">takeLatest(type, callback)</span><br></pre></td></tr></table></figure>
+<p>和<code>takeEvery</code>不同，在任何时刻<code>takeLatest</code>都只允许同一个<code>type</code>Action执行，如果已经有一个任务在执行的时候，启动另一个任务，那么之前的任务会被取消。</p>
+<p>（3）<code>put</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">put(&#123; <span class="attr">type</span>: <span class="string">'TYPE'</span> &#125;)</span><br></pre></td></tr></table></figure>
+<p>返回一个声明式的Dispatch Effect，效果是<code>dispatch</code>一个<code>TYPE</code>Action到Store</p>
+<p>（4）<code>call</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">call(fn, arg1, arg2, ...)</span><br></pre></td></tr></table></figure>
+<p>返回一个声明式的Effect，效果是调用传入的第一个参数（函数）（可以是Promise也可以是另外的Generator函数），并将其他的参数作为函数的参数传入</p>
+<p>也支持调用对象的方法，可以使用下面的形式，未调用的函数提供<code>this</code>上下文：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">call([obj, obj.method], arg1, arg2, ...) <span class="comment">// 如同 obj.method(arg1, arg2 ...)</span></span><br></pre></td></tr></table></figure>
+<p>（5）<code>apply</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apply(obj, obj.method, [arg1, arg2, ...])</span><br></pre></td></tr></table></figure>
+<p>用于调用对象的方法，与<code>call</code>效果相同</p>
+<p>（6）<code>cps</code></p>
+<p><code>call</code>和<code>apply</code>非常适合Promise结果的函数，但是如果是Node风格的函数（例如<code>fn(...args, callback)</code>）的<code>callback</code>是<code>(error, result) =&gt; ()</code>的形式。 <code>cps</code>表示的是延续传递风格，例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; cps &#125; <span class="keyword">from</span> <span class="string">'redux-saga/effects'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> content = <span class="keyword">yield</span> cps(readFile, <span class="string">'/path/to/file'</span>)</span><br></pre></td></tr></table></figure>
+<p>（7）<code>select</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select(selector, ...args)</span><br></pre></td></tr></table></figure>
+<p>创建一个Effect，用来命令中间件在<code>state</code>上调用<code>selector</code>，返回对应的结果，效果相当于<code>select(getState(), ...args)</code></p>
+<p>例如，下面的代码，执行的就是将<code>loading</code>传入<code>selector</code>内，<code>selector</code>返回<code>state</code>或者<code>state</code>的某些属性</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> state = <span class="keyword">yield</span> select((state, a) = &gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(a); <span class="comment">// loading</span></span><br><span class="line">  <span class="keyword">return</span> state.sagaAnswer</span><br><span class="line">&#125;, <span class="string">'loading'</span>);</span><br></pre></td></tr></table></figure>
+<p>当没有传入<code>selector</code>时，会返回完整的<code>state</code>（与调用<code>getState()</code>结果相同）</p>
+<h2 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h2><p>可以使用<code>try/catch</code>在Saga中捕获错误：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Api <span class="keyword">from</span> <span class="string">'./path/to/api'</span></span><br><span class="line"><span class="keyword">import</span> &#123; call, put &#125; <span class="keyword">from</span> <span class="string">'redux-saga/effects'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">fetchProducts</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> products = <span class="keyword">yield</span> call(Api.fetch, <span class="string">'/products'</span>)</span><br><span class="line">    <span class="keyword">yield</span> put(&#123; <span class="attr">type</span>: <span class="string">'PRODUCTS_RECEIVED'</span>, products &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">catch</span>(error) &#123;</span><br><span class="line">    <span class="keyword">yield</span> put(&#123; <span class="attr">type</span>: <span class="string">'PRODUCTS_REQUEST_FAILED'</span>, error &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面提高过，在Generator函数内部，<code>yield</code>本身的返回值是由<code>next</code>方法传入进去的，所以在测试异步测试的返回结果时，只需要通过<code>next</code>方法传入我们模拟的响应结果即可。测试异常结果时，使用Generator的<code>throw</code>方法并传入模拟的错误对象即可，<code>throw</code>方法会中断Generator的执行流，并跳转到<code>catch</code>块</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">describe(<span class="string">'fetchAnswerAsync Saga test '</span>, () =&gt; &#123;</span><br><span class="line">  it(<span class="string">'fetch succeed'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> gen = fetchAnswerAsync(&#123; <span class="attr">payload</span>: &#123; <span class="attr">question</span>: <span class="string">'hello'</span> &#125;&#125;);</span><br><span class="line">    expect(gen.next()).toEqual(&#123; <span class="attr">done</span>: <span class="literal">false</span>, <span class="attr">value</span>: put(&#123; <span class="attr">type</span>: <span class="string">'THINKING'</span> &#125;) &#125;);</span><br><span class="line">    expect(gen.next()).toEqual(&#123; <span class="attr">done</span>: <span class="literal">false</span>, <span class="attr">value</span>: call(Request.getAnswer, &#123; <span class="attr">question</span>: <span class="string">'hello'</span> &#125;) &#125;);</span><br><span class="line">    <span class="comment">// mock success response</span></span><br><span class="line">    <span class="keyword">const</span> res = &#123; <span class="attr">answer</span>: <span class="string">'saga'</span>, <span class="attr">image</span>: <span class="string">'ok'</span> &#125;;</span><br><span class="line">    expect(gen.next(res)).toEqual(&#123;</span><br><span class="line">      done: <span class="literal">false</span>,</span><br><span class="line">      value: put(&#123;</span><br><span class="line">        type: <span class="string">'ASK_QUESTION_SUCCEEDED'</span>,</span><br><span class="line">        payload: res,</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;);</span><br><span class="line">    expect(gen.next()).toEqual(&#123; <span class="attr">done</span>: <span class="literal">true</span> &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  it(<span class="string">'fetch fail'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> gen = fetchAnswerAsync(&#123; <span class="attr">payload</span>: &#123; <span class="attr">question</span>: <span class="string">'hello'</span> &#125;&#125;);</span><br><span class="line">    expect(gen.next()).toEqual(&#123; <span class="attr">done</span>: <span class="literal">false</span>, <span class="attr">value</span>: put(&#123; <span class="attr">type</span>: <span class="string">'THINKING'</span> &#125;) &#125;);</span><br><span class="line">    expect(gen.next()).toEqual(&#123; <span class="attr">done</span>: <span class="literal">false</span>, <span class="attr">value</span>: call(Request.getAnswer, &#123; <span class="attr">question</span>: <span class="string">'hello'</span> &#125;) &#125;);</span><br><span class="line">    <span class="comment">// mock error response</span></span><br><span class="line">    <span class="keyword">const</span> error = &#123; <span class="attr">message</span>: <span class="string">'something wrong...'</span> &#125;;</span><br><span class="line">    expect(gen.throw(error)).toEqual(&#123;</span><br><span class="line">      done: <span class="literal">false</span>,</span><br><span class="line">      value: put(&#123;</span><br><span class="line">        type: <span class="string">'ASK_QUESTION_FAILED'</span>,</span><br><span class="line">        payload: error,</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;);</span><br><span class="line">    expect(gen.next()).toEqual(&#123; <span class="attr">done</span>: <span class="literal">true</span> &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>当然不一定要在<code>try...catch</code>中处理错误，也可以让API封装方法返回一个正常的含有错误标识的值，将错误集中处理、提示（就像Vue项目中使用Axios的响应拦截器中完成的一样），然后返回一个正常的含有错误标识的值，暴露给业务调用者，方便业务调用者进行特殊化的处理：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Api <span class="keyword">from</span> <span class="string">'./path/to/api'</span></span><br><span class="line"><span class="keyword">import</span> &#123; call, put &#125; <span class="keyword">from</span> <span class="string">'redux-saga/effects'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fetchProductsApi</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> Api.fetch(<span class="string">'/products'</span>)</span><br><span class="line">    .then(<span class="function"><span class="params">response</span> =&gt;</span> (&#123; response &#125;))</span><br><span class="line">    .catch(<span class="function"><span class="params">error</span> =&gt;</span> (&#123; error &#125;))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">fetchProducts</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; response, error &#125; = <span class="keyword">yield</span> call(fetchProductsApi)</span><br><span class="line">  <span class="keyword">if</span> (response)</span><br><span class="line">    <span class="keyword">yield</span> put(&#123; <span class="attr">type</span>: <span class="string">'PRODUCTS_RECEIVED'</span>, <span class="attr">products</span>: response &#125;)</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="keyword">yield</span> put(&#123; <span class="attr">type</span>: <span class="string">'PRODUCTS_REQUEST_FAILED'</span>, error &#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="高级技巧"><a href="#高级技巧" class="headerlink" title="高级技巧"></a>高级技巧</h2><h3 id="take"><a href="#take" class="headerlink" title="take"></a><code>take</code></h3><p><code>takeEvery</code>就是建立在<code>take</code>基础上的高阶API，<code>take</code>的功能更前大，让我们通过全面控制Action观察进程来构建复杂的控制流。</p>
+<p>比如下面的例子，它是一个简单的日志记录器，使用了<code>takeEvery(&#39;*&#39;)</code>，接受一个通配符，就可以捕获所有类型的Acetion：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">watchAndLog</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">yield</span> takeEvery(<span class="string">'*'</span>, <span class="function"><span class="keyword">function</span>* <span class="title">logger</span>(<span class="params">action</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> state = <span class="keyword">yield</span> select();</span><br><span class="line"></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'action'</span>, action);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'state after'</span>, state);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用<code>take</code>同样可以实现相同的功能：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; select, take &#125; <span class="keyword">from</span> <span class="string">'redux-saga/effects'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">watchAndLog</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> action = <span class="keyword">yield</span> take(<span class="string">'*'</span>)</span><br><span class="line">    <span class="keyword">const</span> state = <span class="keyword">yield</span> select()</span><br><span class="line"></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'action'</span>, action)</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'state after'</span>, state)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>take</code>会创建一个Effect，之后后它会被暂停，直到另一个匹配的Action被发起了才会继续执行，所以我们上面的无限循环的<code>Action</code>才会行得通。<code>take</code>的返回值就是Action对象：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  type: <span class="string">'INCREMENT'</span>,</span><br><span class="line">  payload: &#123;</span><br><span class="line">    id: <span class="number">123</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用<code>take</code>让我们对流程的控制能力更加强大，使用<code>takeEvery</code>时，被调用的任务无法控制何时被调用，也无法控制何时停止监听。但是在<code>take</code>中，我们可以看做是Saga主动『拉取』Action的，这样反向的控制让我们可以实现更复杂的流程控制。</p>
+<p>例如，在Todo应用中，我们希望监听用户的操作，并在用户初次创建完三条 Todo 信息时显示祝贺信息：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; take, put &#125; <span class="keyword">from</span> <span class="string">'redux-saga/effects'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">watchFirstThreeTodosCreation</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">    <span class="keyword">const</span> action = <span class="keyword">yield</span> take(<span class="string">'TODO_CREATED'</span>)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">yield</span> put(&#123;<span class="attr">type</span>: <span class="string">'SHOW_CONGRATULATION'</span>&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当循环3次后，Saga会<code>put</code>一个<code>SHOW_CONGRATULATION</code>的Effect，然后这个函数就结束了使命，相当于这个监听器停止了监听。</p>
+<p>使用<code>take</code>主动拉取的好处是，可以使用同步的风格来描述我们的控制流。例如想要实现一个登陆控制流<code>LOGIN</code>和<code>LOGOUT</code>，使用<code>takeEvery</code>我们必须写两个分别的任务，一个用于登陆，一个用于登出</p>
+<p>这样本来应该是顺序的流程，代码被强行分割了（理想情况下，一个良好的控制流应该始终强制执行顺序一致的Actions，不应该出现意料之外的Action）</p>
+<p>使用<code>take</code>，可以将控制流集中在一个Generator函数中：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; take, call, put &#125; <span class="keyword">from</span> <span class="string">'redux-saga/effects'</span></span><br><span class="line"><span class="keyword">import</span> Api <span class="keyword">from</span> <span class="string">'...'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">authorize</span>(<span class="params">user, password</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> token = <span class="keyword">yield</span> call(Api.authorize, user, password)</span><br><span class="line">    <span class="keyword">yield</span> put(&#123;<span class="attr">type</span>: <span class="string">'LOGIN_SUCCESS'</span>, token&#125;)</span><br><span class="line">    <span class="keyword">return</span> token</span><br><span class="line">  &#125; <span class="keyword">catch</span>(error) &#123;</span><br><span class="line">    <span class="keyword">yield</span> put(&#123;<span class="attr">type</span>: <span class="string">'LOGIN_ERROR'</span>, error&#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">loginFlow</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">while</span>(<span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123;user, password&#125; = <span class="keyword">yield</span> take(<span class="string">'LOGIN_REQUEST'</span>)</span><br><span class="line">    <span class="keyword">const</span> token = <span class="keyword">yield</span> call(authorize, user, password)</span><br><span class="line">    <span class="keyword">if</span>(token) &#123;</span><br><span class="line">      <span class="keyword">yield</span> call(Api.storeItem(&#123;token&#125;))</span><br><span class="line">      <span class="keyword">yield</span> take(<span class="string">'LOGOUT'</span>)</span><br><span class="line">      <span class="keyword">yield</span> call(Api.clearItem(<span class="string">'token'</span>))</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码有几点可以学习：</p>
+<ol>
+<li><code>loginFlow</code>在一个<code>while(true)</code>循环中实现所有流程，也就是说，一旦流程达到最后一步（<code>LOGOUT</code>），函数会等待一个新的<code>LOGIN_REQUEST</code>Action来启动新的迭代</li>
+<li>从<code>take</code>的<code>payload</code>中获取到对应的参数</li>
+<li><code>call</code>可以用来调用其他Generator函数，<code>loginFlow</code>会等待<code>authorize</code>返回或终止）</li>
+<li>整个登陆、登出逻辑在一个函数中，就像同步代码一样，它们的自然顺序确定了执行步骤</li>
+</ol>
+<p>但是上面的代码有一个小问题，当在登陆过程中，等待<code>authorize</code>返回值的器件，如果用户点击了登出按钮，触发了<code>LOGOUT</code>的Action，那么这个Action就会被忽略：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">UI                              loginFlow</span><br><span class="line">--------------------------------------------------------</span><br><span class="line">LOGIN_REQUEST...................call authorize.......... waiting to resolve</span><br><span class="line">........................................................</span><br><span class="line">........................................................</span><br><span class="line">LOGOUT.................................................. missed!</span><br><span class="line">........................................................</span><br><span class="line">................................authorize returned...... dispatch a `LOGIN_SUCCESS`!!</span><br><span class="line">........................................................</span><br></pre></td></tr></table></figure>
+<p>造成这个问题的原因就是因为在<code>yield call(authorize, user, password)</code>是一个会阻塞的Effect，即在Generator调用结束之前不能执行或处理其他任何事情。</p>
+<p>但是为了解决上面的问题，我们不仅希望<code>loginFlow</code>执行授权调用，也想监听可能发生在调用未完成之前的<code>LOGOUT</code>的Action，因为它们是并发的关系（当然如果使用<code>takeEvery</code>可以实现，但是流程会被打散）</p>
+<p>我们可以使用Redux-Saga提供的另一个Effect：<code>fork</code>，当我们<code>fork</code>一个任务，任务会在后台启动，调用者可以继续自己的流程，而不用等待<code>fork</code>的结果。</p>
+<p>但是如果将<code>yield call(authorize, user, password)</code>改为<code>yield fork(authorize, user, password)</code>，代码可以继续向下执行，监听<code>LOGOUT</code>，但是登陆所需要的<code>token</code>也无法获取到了，所以需要将对<code>token</code>的操作移动到<code>authorize</code>内部：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; fork, call, take, put &#125; <span class="keyword">from</span> <span class="string">'redux-saga/effects'</span></span><br><span class="line"><span class="keyword">import</span> Api <span class="keyword">from</span> <span class="string">'...'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">authorize</span>(<span class="params">user, password</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> token = <span class="keyword">yield</span> call(Api.authorize, user, password)</span><br><span class="line">    <span class="keyword">yield</span> put(&#123;<span class="attr">type</span>: <span class="string">'LOGIN_SUCCESS'</span>, token&#125;)</span><br><span class="line">  &#125; <span class="keyword">catch</span>(error) &#123;</span><br><span class="line">    <span class="keyword">yield</span> put(&#123;<span class="attr">type</span>: <span class="string">'LOGIN_ERROR'</span>, error&#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">loginFlow</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">while</span>(<span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123;user, password&#125; = <span class="keyword">yield</span> take(<span class="string">'LOGIN_REQUEST'</span>)</span><br><span class="line">    <span class="keyword">yield</span> fork(authorize, user, password)</span><br><span class="line">    <span class="keyword">yield</span> take([<span class="string">'LOGOUT'</span>, <span class="string">'LOGIN_ERROR'</span>])</span><br><span class="line">    <span class="keyword">yield</span> call(Api.clearItem(<span class="string">'token'</span>))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>另外，在<code>fork</code>后面，我们使用了<code>take</code>并传入了一个数组，它的意思是监听两个并发的Action，会有下面三种情况：</p>
+<ul>
+<li>如果<code>authorize</code>在用户登出之前成功了，那么它会发起一个<code>LOGIN_SUCCESS</code>Action，然后结束。此时<code>loginFlow</code>Saga只会等待一个未来的<code>LOGOUT</code>Action被发起</li>
+<li>如果<code>authorize</code>在用户登出之前失败了，那么它会发起一个<code>LOGIN_ERROR</code>Action，然后结束。此时<code>loginFlow</code>Saga接受到<code>LOGIN_ERROR</code>的Action，执行<code>yield call(Api.clearItem(&#39;token&#39;))</code>（多执行一次，没有关系），然后进行下一个<code>while</code>循环，等待下一个<code>LOGIN_REQUEST</code>的Action</li>
+<li>如果在<code>authorize</code>之前，用户登出，那么<code>loginFlow</code>会受到<code>LOGOUT</code>的Action，也会进入下一个<code>while</code>循环</li>
+</ul>
+<p>但是还有一个问题，第三种情况中，<code>authorize</code>任务还在进行当中，早晚会返回一个成功或者失败的Action，这将导致状态混乱，所以我们需要取消<code>fork</code>任务，可以使用另一个Effect来取消任务，那就是<code>cancel</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; take, put, call, fork, cancel &#125; <span class="keyword">from</span> <span class="string">'redux-saga/effects'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">loginFlow</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">while</span>(<span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123;user, password&#125; = <span class="keyword">yield</span> take(<span class="string">'LOGIN_REQUEST'</span>)</span><br><span class="line">    <span class="comment">// fork return a Task object</span></span><br><span class="line">    <span class="keyword">const</span> task = <span class="keyword">yield</span> fork(authorize, user, password)</span><br><span class="line">    <span class="keyword">const</span> action = <span class="keyword">yield</span> take([<span class="string">'LOGOUT'</span>, <span class="string">'LOGIN_ERROR'</span>])</span><br><span class="line">    <span class="keyword">if</span> (action.type === <span class="string">'LOGOUT'</span>) &#123;</span><br><span class="line">      <span class="keyword">yield</span> cancel(task)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">yield</span> call(Api.clearItem(<span class="string">'token'</span>))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>yield fork</code>返回结果是一个<a href="https://redux-saga-in-chinese.js.org/docs/api/index.html#task" target="_blank" rel="noopener">Task Object</a>，具有以下方法：</p>
+<p><img src="http://image.oldzhou.cn/Ft8720_Zbk2J81vAfPyBZ1-9SXRr" alt=""></p>
+<p>这样当收到登出的Action时，如果<code>authorize</code>在执行中会被取消，如果<code>authorize</code>已成功完成那么什么都不会发生，取消操作将是一个空操作，如果<code>authorize</code>完成发生错误也没有关系，因为<code>loginFlow</code>已经进入下一个循环</p>
+<p>但是如果我们在Reducer中设置了<code>loading</code>状态，它这时的值为<code>true</code>，如果直接粗暴的结束了<code>authrozie</code>，由于我们没有触发Reducer中会改变<code>loading</code>状态的Action，<code>loading</code>的值不会改变，界面上仍然在转圈，状态又发生了不一致。</p>
+<p>我们可以在<code>authorize</code>中处理这个情况，通过引入<code>cancelled</code>这个辅助函数，我们可以再<code>finally</code>中处理取消逻辑（以及其他类型的完成逻辑）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; take, call, put, cancelled &#125; <span class="keyword">from</span> <span class="string">'redux-saga/effects'</span></span><br><span class="line"><span class="keyword">import</span> Api <span class="keyword">from</span> <span class="string">'...'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span>* <span class="title">authorize</span>(<span class="params">user, password</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> token = <span class="keyword">yield</span> call(Api.authorize, user, password)</span><br><span class="line">    <span class="keyword">yield</span> put(&#123;<span class="attr">type</span>: <span class="string">'LOGIN_SUCCESS'</span>, token&#125;)</span><br><span class="line">    <span class="keyword">yield</span> call(Api.storeItem, &#123;token&#125;)</span><br><span class="line">    <span class="keyword">return</span> token</span><br><span class="line">  &#125; <span class="keyword">catch</span>(error) &#123;</span><br><span class="line">    <span class="keyword">yield</span> put(&#123;<span class="attr">type</span>: <span class="string">'LOGIN_ERROR'</span>, error&#125;)</span><br><span class="line">  &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">yield</span> cancelled()) &#123;</span><br><span class="line">      <span class="comment">// ... put special cancellation handling code here</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>具体的清除<code>loading</code>状态，可以单独指定清除<code>loading</code>的Action，也可以在每次<code>LOGOUT</code>的Action中进行清除。</p>
+<h2 id="同时执行多个任务"><a href="#同时执行多个任务" class="headerlink" title="同时执行多个任务"></a>同时执行多个任务</h2><p><code>yield</code>会一个一个顺序执行任务：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 错误写法，effects 将按照顺序执行</span></span><br><span class="line"><span class="keyword">const</span> users = <span class="keyword">yield</span> call(fetch, <span class="string">'/users'</span>),</span><br><span class="line">      repos = <span class="keyword">yield</span> call(fetch, <span class="string">'/repos'</span>)</span><br></pre></td></tr></table></figure>
+<p>如果希望同时执行，需要使用<code>Promise.all</code>对应的辅助函数<code>all</code>，将任务放到数组中，Generator会阻塞到所有的Effects执行完成，或者某一个Effect被拒绝（就像<code>Promise.all</code>）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; call， all &#125; <span class="keyword">from</span> <span class="string">'redux-saga/effects'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 正确写法, effects 将会同步执行</span></span><br><span class="line"><span class="keyword">const</span> [users, repos] = <span class="keyword">yield</span> all([</span><br><span class="line">  call(fetch, <span class="string">'/users'</span>),</span><br><span class="line">  call(fetch, <span class="string">'/repos'</span>)</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+<h2 id="高级技巧-1"><a href="#高级技巧-1" class="headerlink" title="高级技巧"></a>高级技巧</h2><p>文档其实还介绍了<code>race</code>、组合Sagas、并发等高级技术，以后有时间、有需要再深入学习。要注意的是，中文文档与英文文档有一定差异，最好还是以英文文档为主。</p>
+<h2 id="TodoList"><a href="#TodoList" class="headerlink" title="TodoList"></a>TodoList</h2><p>利用Redux-Saga做了一个TodoList的例子，源码在<a href="https://github.com/duola8789/react-learning/" target="_blank" rel="noopener">这个仓库</a>里。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://redux-saga.js.org/" target="_blank" rel="noopener">redux-saga</a></li>
+<li><a href="https://redux-saga-in-chinese.js.org/" target="_blank" rel="noopener">redux-saga中文文档（1.0.0-beta)</a></li>
+<li><a href="https://juejin.im/post/5b8d4eaa518825430810d735#heading-5" target="_blank" rel="noopener">Redux-saga框架使用详解及Demo教程@掘金</a></li>
+</ul>
+
+      
+    </div>
+
+    
+      
+
+
+    
+
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+  <img id="wechat_subscriber_qcode" src="/images/wechat-qcode.jpg" alt="哆啦斯基周 wechat" style="width: 200px; max-width: 100%;">
+  <div>我的公众号，看心情更新，欢迎订阅！</div>
+</div>
+
+      </div>
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/React/" rel="tag"># React</a>
+          
+            <a href="/tags/Redux/" rel="tag"># Redux</a>
+          
+            <a href="/tags/Redux-Saga/" rel="tag"># Redux-Saga</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/18/01 前端笔记/06 Redux/Redux04 React + Redux 最佳实践/" rel="next" title="Redux04 React + Redux 最佳实践">
+                <i class="fa fa-chevron-left"></i> Redux04 React + Redux 最佳实践
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/01/14/01 前端笔记/15 TypeScript/TS05 在Vue中使用TypeScript/" rel="prev" title="TS05 在Vue中使用TypeScript">
+                TS05 在Vue中使用TypeScript <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar3.png" alt="哆啦斯基周">
+            
+              <p class="site-author-name" itemprop="name">哆啦斯基周</p>
+              <p class="site-description motion-element" itemprop="description">一个大龄前端程序员的技术博客</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">184</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">27</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">269</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/duola8789" title="GitHub &rarr; https://github.com/duola8789" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                  
+                    
+                  
+                  <a href="mailto:duola8789@126.com" title="E-Mail &rarr; mailto:duola8789@126.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                  
+                    
+                  
+                  <a href="https://weibo.com/zhouhaozhouhao" title="Weibo &rarr; https://weibo.com/zhouhaozhouhao" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                  
+                    
+                  
+                  <a href="https://blog.csdn.net/duola8789" title="CSDN &rarr; https://blog.csdn.net/duola8789" rel="noopener" target="_blank"><i class="fa fa-fw fa-rss-square"></i></a>
+                </span>
+              
+            </div>
+          
+
+          
+             <div class="cc-license motion-element" itemprop="license">
+              
+                
+              
+              
+              
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+             </div>
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hello-Saga"><span class="nav-number">2.</span> <span class="nav-text">Hello Saga</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异步调用"><span class="nav-number">3.</span> <span class="nav-text">异步调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Effect"><span class="nav-number">4.</span> <span class="nav-text">Effect</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试"><span class="nav-number">5.</span> <span class="nav-text">测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用API"><span class="nav-number">6.</span> <span class="nav-text">常用API</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#错误处理"><span class="nav-number">7.</span> <span class="nav-text">错误处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高级技巧"><span class="nav-number">8.</span> <span class="nav-text">高级技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#take"><span class="nav-number">8.1.</span> <span class="nav-text">take</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同时执行多个任务"><span class="nav-number">9.</span> <span class="nav-text">同时执行多个任务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高级技巧-1"><span class="nav-number">10.</span> <span class="nav-text">高级技巧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TodoList"><span class="nav-number">11.</span> <span class="nav-text">TodoList</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">12.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">哆啦斯基周</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动</div>
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.7.0"></script>
+
+  <script src="/js/src/motion.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.7.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.7.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+
+
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function (item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'Fg5UsXV9f7m1xb1SioXny6QN-gzGzoHsz',
+    appKey: 'DLV7a4oTpQynJCIelKn3L7Ja',
+    placeholder: '大侠留步，请留下您宝贵的意见',
+    avatar: 'retro',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+</script>
+
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
