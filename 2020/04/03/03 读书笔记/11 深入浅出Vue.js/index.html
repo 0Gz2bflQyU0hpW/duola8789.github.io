@@ -1,0 +1,2154 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=6.7.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=6.7.0">
+
+
+  <link rel="mask-icon" href="/images/logo-new.svg?v=6.7.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.7.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="《深入浅出Vue.js》读书笔记。非常好的一本书，对Vue源码和原理介绍的确实是深入浅出，值得阅读。">
+<meta name="keywords" content="Vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入浅出Vue.js">
+<meta property="og:url" content="http://oldzhou.cn/2020/04/03/03 读书笔记/11 深入浅出Vue.js/index.html">
+<meta property="og:site_name" content="不负好时光">
+<meta property="og:description" content="《深入浅出Vue.js》读书笔记。非常好的一本书，对Vue源码和原理介绍的确实是深入浅出，值得阅读。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://image.oldzhou.cn/FjhcC9MMhk9dQJR9lNHE4pcIG1NV">
+<meta property="og:image" content="http://image.oldzhou.cn/FhMU5iQv9B7TnNNDA6z2lwuQYnD0">
+<meta property="og:image" content="http://image.oldzhou.cn/Fr0ytebuoer4n2eoZCBquc76b2hd">
+<meta property="og:image" content="http://image.oldzhou.cn/FiZjL_XRKiL0KYqSvnvetFfGZRzV">
+<meta property="og:image" content="http://image.oldzhou.cn/FpXbMrMSvqR9BbHt4hA86oySIxSa">
+<meta property="og:image" content="http://image.oldzhou.cn/ForjMZACaWehXBCzrYVaW9_5eDvn">
+<meta property="og:image" content="http://image.oldzhou.cn/FpndwBHawiNvZ_LhhzZToBKuCrh4">
+<meta property="og:image" content="http://image.oldzhou.cn/FpLaebaATQeFLD9440aoEaiGY3gX">
+<meta property="og:updated_time" content="2020-06-09T09:42:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入浅出Vue.js">
+<meta name="twitter:description" content="《深入浅出Vue.js》读书笔记。非常好的一本书，对Vue源码和原理介绍的确实是深入浅出，值得阅读。">
+<meta name="twitter:image" content="http://image.oldzhou.cn/FjhcC9MMhk9dQJR9lNHE4pcIG1NV">
+
+
+
+
+
+
+  <link rel="canonical" href="http://oldzhou.cn/2020/04/03/03 读书笔记/11 深入浅出Vue.js/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>深入浅出Vue.js | 不负好时光</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">不负好时光</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">没什么才华，就剩一点坚持</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="http://www.oldzhou.cn/pages/page1.html" rel="noopener" target="_blank"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://oldzhou.cn/2020/04/03/03 读书笔记/11 深入浅出Vue.js/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="哆啦斯基周">
+      <meta itemprop="description" content="一个大龄前端程序员的技术博客">
+      <meta itemprop="image" content="/images/avatar3.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负好时光">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">深入浅出Vue.js
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+         
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2020-04-03 09:37:45" itemprop="dateCreated datePublished" datetime="2020-04-03T09:37:45+00:00">2020-04-03</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-06-09 09:42:28" itemprop="dateModified" datetime="2020-06-09T09:42:28+00:00">2020-06-09</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/读书笔记/" itemprop="url" rel="index"><span itemprop="name">读书笔记</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/04/03/03 读书笔记/11 深入浅出Vue.js/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2020/04/03/03 读书笔记/11 深入浅出Vue.js/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><a href="https://book.douban.com/subject/32581281/" target="_blank" rel="noopener">《深入浅出Vue.js》</a>读书笔记。非常好的一本书，对Vue源码和原理介绍的确实是深入浅出，值得阅读。</p>
+<a id="more"></a>
+<h1 id="Object的变化侦测"><a href="#Object的变化侦测" class="headerlink" title="Object的变化侦测"></a>Object的变化侦测</h1><p>Vue中一个状态的依赖不再是具体的DOM节点，而是一个组件。当状态变化后，会通知到组件，组件内部再使用虚拟DOM进行比对。这样可以大大降低依赖数量，从而降低依赖追踪所消耗的内存。</p>
+<p>逐步回答下列问题：</p>
+<h2 id="如何追踪变化？"><a href="#如何追踪变化？" class="headerlink" title="如何追踪变化？"></a>如何追踪变化？</h2><p>使用<code>Object.defineProperty</code>劫持对象的<code>get</code>和<code>set</code>属性，封装成为<code>defineReactive(data, key, value)</code>这样一个函数</p>
+<h2 id="如何收集依赖？"><a href="#如何收集依赖？" class="headerlink" title="如何收集依赖？"></a>如何收集依赖？</h2><p>在<code>getter</code>中收集依赖，在<code>setter</code>中触发更新</p>
+<h2 id="依赖收集在哪里"><a href="#依赖收集在哪里" class="headerlink" title="依赖收集在哪里"></a>依赖收集在哪里</h2><p>首先将依赖保存在一个全局变量上（比如<code>window.target</code>），然后用一个数组来保存收集的依赖。</p>
+<p>上述代码封装为<code>Dep</code>类，专门用来管理依赖，它包括<code>addSub</code>、<code>removeSub</code>、<code>depend</code>、<code>notify</code>方法。</p>
+<p><code>Dep</code>会在<code>defineReactive</code>中实例化，在<code>get</code>中<code>depend</code>，在<code>set</code>中<code>notify</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dep</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="keyword">this</span>.subs = [];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  addSub(sub) &#123;</span><br><span class="line">    <span class="keyword">this</span>.subs.push(sub);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  removeSub(sub) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.subs.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="keyword">const</span> index = <span class="keyword">this</span>.subs.indexOf(sub);</span><br><span class="line">      <span class="keyword">if</span> (index &gt; <span class="number">-1</span>) &#123;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  depend() &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">window</span>.target) &#123;</span><br><span class="line">      <span class="keyword">this</span>.addSub(<span class="built_in">window</span>.target);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  notify() &#123;</span><br><span class="line">    <span class="keyword">const</span> subs = <span class="keyword">this</span>.subs.slice();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; subs.length; i++) &#123;</span><br><span class="line">      subs[i].update();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="依赖是谁"><a href="#依赖是谁" class="headerlink" title="依赖是谁"></a>依赖是谁</h2><p><code>Watcher</code>类，它是抽象出来，用来集中处理各种情况的类。依赖收集阶段只收集这个封装好的类的实例，通知只通知它一个，再由他通知其他地方。</p>
+<h2 id="Watcher是什么"><a href="#Watcher是什么" class="headerlink" title="Watcher是什么"></a><code>Watcher</code>是什么</h2><p><code>Watcher</code>的实现非常巧妙，需要结合代码体会：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Watcher</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(vm, expOrFn, cb) &#123;</span><br><span class="line">    <span class="keyword">this</span>.vm = vm;</span><br><span class="line">    <span class="keyword">this</span>.cb = cb;</span><br><span class="line">    <span class="keyword">this</span>.getter = parsePath(expOrFn);</span><br><span class="line">    <span class="keyword">this</span>.value = <span class="keyword">this</span>.get();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  get() &#123;</span><br><span class="line">    <span class="built_in">window</span>.target = <span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">this</span>.value = <span class="keyword">this</span>.getter.call(<span class="keyword">this</span>.vm, <span class="keyword">this</span>.vm);</span><br><span class="line">    <span class="built_in">window</span>.target = <span class="literal">undefined</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.value;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  update() &#123;</span><br><span class="line">    <span class="keyword">const</span> oldValue = <span class="keyword">this</span>.value;</span><br><span class="line">    <span class="keyword">this</span>.value = <span class="keyword">this</span>.get();</span><br><span class="line">    <span class="keyword">this</span>.cb.call(<span class="keyword">this</span>.vm, <span class="keyword">this</span>.value, oldValue);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（1）在构造方法中，把<code>parsePath</code>的返回值赋值给<code>getter</code>，<code>parsePath</code>的返回值是一个函数，给这个函数传入一个对象，就可以访问这个对象在对应的<code>expOrFn</code>路径下的属性值</p>
+<p>（2）在构造方法中，调用<code>get</code>为<code>value</code>赋值，<code>get</code>方法中，将<code>Watcher</code>实例赋值给<code>window.target</code>，然后通过调用上一步的<code>getter</code>方法，获取对象在<code>expOrFn</code>路径下的属性值，并将属性值赋给<code>value</code>。</p>
+<p>（3）在读取这个属性值（<code>expOrFn</code>）的时候，会触发属性值的<code>getter</code>，在<code>getter</code>中我们会将<code>window.target</code>收集到依赖<code>dep</code>中，此时<code>window.target</code>已经是<code>watcher</code>实例了，这样就将<code>watcher</code>实例收集到依赖中</p>
+<p>（4）<code>update</code>方法是在<code>Dep</code>中的<code>notify</code>方法中被调用的，用来触发<code>Watcher</code>中真正要执行的方法</p>
+<h2 id="如何侦测所有属性"><a href="#如何侦测所有属性" class="headerlink" title="如何侦测所有属性"></a>如何侦测所有属性</h2><p>上面只能侦测单个属性 ，所以封装了<code>Observer</code>类来递归侦测数据所有的属性（包括子属性），将所有的属性都转换为<code>getter/setter</code>的形式，追踪其变化</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Observer</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(value) &#123;</span><br><span class="line">    <span class="keyword">this</span>.value = value;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!<span class="built_in">Array</span>.isArray(value)) &#123;</span><br><span class="line">      <span class="comment">// 遍历所有属性</span></span><br><span class="line">      <span class="keyword">this</span>.walk(value);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  walk(value) &#123;</span><br><span class="line">    <span class="keyword">const</span> keys = <span class="built_in">Object</span>.keys(value);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; keys.length; i++) &#123;</span><br><span class="line">      defineReactive(value, keys[i], value[keys[i]]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> defineReactive = <span class="function">(<span class="params">data, key, value</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 递归子属性</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> value === <span class="string">'object'</span>) &#123;</span><br><span class="line">    <span class="keyword">new</span> Observer(value);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">let</span> dep = <span class="keyword">new</span> Dep();</span><br><span class="line">  <span class="built_in">Object</span>.defineProperty(data, key, &#123;</span><br><span class="line">    enumerable: <span class="literal">true</span>,</span><br><span class="line">    configurable: <span class="literal">true</span>,</span><br><span class="line">    get() &#123;</span><br><span class="line">      dep.depend();</span><br><span class="line">      <span class="keyword">return</span> value;</span><br><span class="line">    &#125;,</span><br><span class="line">    set(newVal) &#123;</span><br><span class="line">      <span class="keyword">if</span> (newVal === value) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      value = newVal;</span><br><span class="line">      dep.notify();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>（1）通过封装<code>Object.defineProperty</code>方法得到的<code>defineReactive</code>函数来劫持属性的<code>getter</code>和<code>setter</code>，在<code>getter</code>中收集依赖，在<code>setter</code>中触发依赖更新</p>
+<p>（2）<code>Dep</code>类用来收集和管理依赖，在<code>getter</code>中<code>depned</code>，在<code>setter</code>中<code>notify</code></p>
+<p>（3）<code>Watcher</code>类就是收集的依赖，实际上是一个订阅器，<code>Watcher</code>会将自己的实例赋值给<code>window.target</code>（全局变量）上，然后去主动访问属性，触发属性的<code>getter</code>，将<code>window.target</code>收集到<code>Dep</code>中，<code>Watcher</code>的<code>update</code>方法会在<code>Dep</code>的<code>notify</code>方法中被调用，触发更新</p>
+<p>（4）<code>Obersver</code>类用来将一个对象的所有属性和子属性都变成响应式的，通过递归调用<code>defineReactive</code>来实现</p>
+<h1 id="Array的变化侦测"><a href="#Array的变化侦测" class="headerlink" title="Array的变化侦测"></a>Array的变化侦测</h1><h2 id="如何追踪变化"><a href="#如何追踪变化" class="headerlink" title="如何追踪变化"></a>如何追踪变化</h2><p>使用拦截器，拦截数组可以改变自身的方法，覆盖<code>Array.prototype</code></p>
+<h2 id="拦截器是什么"><a href="#拦截器是什么" class="headerlink" title="拦截器是什么"></a>拦截器是什么</h2><p>拦截器要具能够实现原生数组方法的功能，但是提供机会让我们可以插入一些操作：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arrayProto = <span class="built_in">Array</span>.prototype;</span><br><span class="line"><span class="keyword">const</span> arrayMethods = <span class="built_in">Object</span>.create(arrayProto)</span><br><span class="line"></span><br><span class="line">[<span class="string">'push'</span>, <span class="string">'pop'</span>, <span class="string">'shift'</span>, <span class="string">'unshift'</span>, <span class="string">'reverse'</span>, <span class="string">'sort'</span>, <span class="string">'splice'</span>].forEach(<span class="function">(<span class="params">method</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 缓存原始方法</span></span><br><span class="line">  <span class="keyword">const</span> original = arrayProto[method];</span><br><span class="line">  <span class="built_in">Object</span>.defineProperty(arrayMethods, method, &#123;</span><br><span class="line">    value: <span class="function"><span class="keyword">function</span> <span class="title">mutator</span>(<span class="params">...args</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> original.apply(<span class="keyword">this</span>, args)</span><br><span class="line">    &#125;,</span><br><span class="line">    enumerable: <span class="literal">false</span>,</span><br><span class="line">    writable: <span class="literal">true</span>,</span><br><span class="line">    configurable: <span class="literal">true</span></span><br><span class="line">  &#125;)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="使用拦截器覆盖Array原型"><a href="#使用拦截器覆盖Array原型" class="headerlink" title="使用拦截器覆盖Array原型"></a>使用拦截器覆盖Array原型</h2><p>有两种方法来覆盖，一种是使用<code>__proto__</code>属性，另外一种是当<code>__proto__</code>不被支持的情况下，直接接改写的方法直接设置到被侦测的数组上：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> hasProto = <span class="string">`__proto__`</span> <span class="keyword">in</span> &#123;&#125;;</span><br><span class="line"><span class="keyword">const</span> arrayKeys = <span class="built_in">Object</span>.getOwnPropertyNames(arrayMethods);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">def</span>(<span class="params">obj, key, val, enumerable</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">Object</span>.defineProperty(obj, key, &#123;</span><br><span class="line">    value: val,</span><br><span class="line">    enumerable: !!enumerable,</span><br><span class="line">    writable: <span class="literal">true</span>,</span><br><span class="line">    configurable: <span class="literal">true</span></span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">Observer</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(value) &#123;</span><br><span class="line">    <span class="keyword">this</span>.value = value;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">Array</span>.isArray(value)) &#123;</span><br><span class="line">      <span class="keyword">const</span> augment = hasProto ? protoAugment : copyAugment;</span><br><span class="line">      augment(value, arrayMethods, arrayKeys);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">protoAugment</span>(<span class="params">target, src, keys</span>) </span>&#123;</span><br><span class="line">  target.__proto__ = src;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">copyAugment</span>(<span class="params">target, src, keys</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>, l = keys.length; i &lt; l; i++) &#123;</span><br><span class="line">    <span class="keyword">const</span> key = keys[i];</span><br><span class="line">    def(target, key, src[key])</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="如何收集数组的依赖"><a href="#如何收集数组的依赖" class="headerlink" title="如何收集数组的依赖"></a>如何收集数组的依赖</h2><p>这里谈论的数组，本身也是对象的一个属性值，例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  data: &#123;</span><br><span class="line">    arr: []</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>数组本身的依赖，也是在<code>arr</code>这个<code>key</code>的响应式监听中收集依赖的，所以数组本身的依赖收集也是在<code>getter</code>中收集的，但是触发依赖的过程不光是在<code>setter</code>中，还有在上面改写的数组方法的拦截器中触发</p>
+<h2 id="在哪里那保存数组的依赖"><a href="#在哪里那保存数组的依赖" class="headerlink" title="在哪里那保存数组的依赖"></a>在哪里那保存数组的依赖</h2><p>数组触发依赖不是在<code>definedProperty</code>和<code>setter</code>中完成的，而是在拦截器中完成的，数组拦截器中无法访问在<code>defineReactive</code>中定义的<code>let dep = new Dep()</code>这个变量，所以Vue将数组的依赖保存了在了<code>Observer</code>的实例属性上：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Observer</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(value) &#123;</span><br><span class="line">    <span class="keyword">this</span>.value = value;</span><br><span class="line">    <span class="keyword">this</span>.dep = <span class="keyword">new</span> Dep();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ......</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样，在<code>getter</code>中和拦截器中都可以访问以依赖了，至于如何依赖，后面介绍。</p>
+<h2 id="收集依赖"><a href="#收集依赖" class="headerlink" title="收集依赖"></a>收集依赖</h2><p>在<code>getter</code>中收集数组的依赖时，需要访问到<code>Obersver</code>的实例上保存的<code>dep</code>属性，Vue中是通过定义了一个<code>observe</code>方法实现的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">observe</span>(<span class="params">val</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!isObject(val)) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">let</span> ob;</span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">Object</span>.prototype.hasOwnProperty.call(val, <span class="string">'__proto__'</span>) &amp;&amp; val <span class="keyword">instanceof</span> Observer) &#123;</span><br><span class="line">    ob = val.__proto__;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    ob = <span class="keyword">new</span> Observer(val);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> ob;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先根据<code>__proto__</code>属性判断数组是不是响应式数据，如果已经是了就不需要再重复创建<code>Obersver</code>的实例，如果不是的话则会创建一个<code>Obersver</code>实例</p>
+<p><code>observe</code>方法会在<code>definedReactive</code>中被调用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> defineReactive = <span class="function">(<span class="params">data, key, value</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> childOb = observe(value);</span><br><span class="line">  <span class="keyword">let</span> dep = <span class="keyword">new</span> Dep();</span><br><span class="line">  <span class="built_in">Object</span>.defineProperty(data, key, &#123;</span><br><span class="line">    enumerable: <span class="literal">true</span>,</span><br><span class="line">    configurable: <span class="literal">true</span>,</span><br><span class="line">    get() &#123;</span><br><span class="line">      dep.depend();</span><br><span class="line">      <span class="comment">// 将数组的依赖保存在`Observer`实例上</span></span><br><span class="line">      <span class="keyword">if</span> (childOb) &#123;</span><br><span class="line">        childOb.dep.depend();</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> value;</span><br><span class="line">    &#125;,</span><br><span class="line">    set(newVal) &#123;</span><br><span class="line">      <span class="keyword">if</span> (newVal === value) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      value = newVal;</span><br><span class="line">      dep.notify();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>这样数组的依赖就被保存在了<code>Observer</code>实例上（我理解，这个<code>childOb</code>就是为了将数组的依赖保存在<code>Observer</code>实例上存在的，如果没有它数组的依赖无法挂载到<code>Observer</code>实例上）</p>
+<h2 id="在拦截器中获取Observer实例"><a href="#在拦截器中获取Observer实例" class="headerlink" title="在拦截器中获取Observer实例"></a>在拦截器中获取Observer实例</h2><p>在拦截器中的<code>this</code>指向的当前数组的实例，我们希望在<code>this</code>上读取到<code>Observer</code>的实例，Vue的做法是在<code>Observer</code>定义时为数组实例添加了一个<code>__ob__</code>属性，将Observer实例保存到了这个属性上</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Observer</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(value) &#123;</span><br><span class="line">    <span class="keyword">this</span>.value = value;</span><br><span class="line">    <span class="keyword">this</span>.dep = <span class="keyword">new</span> Dep();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将 observer 实例赋到 __ob__属性</span></span><br><span class="line">    def(value, <span class="string">'__ob__'</span>, <span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>__ob__</code>的作用不仅仅是在拦截器中访问<code>Observer</code>的实例，还可以用来标记当前<code>value</code>是否已经被<code>Observer</code>转换为了响应式的数据</p>
+<p>在<code>value</code>上标记了<code>__ob__</code>之后，就可以通过<code>value.__ob__</code>来访问<code>Observer</code>的实例，然后通过<code>Observer</code>实例上保存的<code>dep</code>属性来访问收集的数组的依赖：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 改写数组的原生方法</span></span><br><span class="line">[<span class="string">'push'</span>, <span class="string">'pop'</span>, <span class="string">'shift'</span>, <span class="string">'unshift'</span>, <span class="string">'reverse'</span>, <span class="string">'sort'</span>, <span class="string">'splice'</span>].forEach(<span class="function">(<span class="params">method</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> original = arrayProto[method];</span><br><span class="line">  def(arrayMethods, method, <span class="function"><span class="keyword">function</span> <span class="title">mutator</span>(<span class="params">...args</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> result = original.apply(<span class="keyword">this</span>, args);</span><br><span class="line">    <span class="comment">// 访问 Observer 实例</span></span><br><span class="line">    <span class="keyword">const</span> ob = <span class="keyword">this</span>.__ob__;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 访问依赖并发送通知</span></span><br><span class="line">    ob.dep.notify();</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="侦测数组成员的变化"><a href="#侦测数组成员的变化" class="headerlink" title="侦测数组成员的变化"></a>侦测数组成员的变化</h2><p>在<code>Observer</code>中针对数组类型定义了<code>observerArray</code>方法，这个方法中遍历数组的每个成员，调用前面定义的<code>observe</code>方法，将每个成员都转换为响应式数据：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Observer</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(value) &#123;</span><br><span class="line">    <span class="keyword">this</span>.value = value;</span><br><span class="line">    <span class="keyword">this</span>.dep = <span class="keyword">new</span> Dep();</span><br><span class="line"></span><br><span class="line">    def(value, <span class="string">'__ob__'</span>, <span class="keyword">this</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">Array</span>.isArray(value)) &#123;</span><br><span class="line">      <span class="comment">// 拦截数组原生方法</span></span><br><span class="line">      <span class="keyword">const</span> augment = hasProto ? protoAugment : copyAugment;</span><br><span class="line">      augment(value, arrayMethods, arrayKeys);</span><br><span class="line">      <span class="keyword">this</span>.observeArray(value);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">this</span>.walk(value);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  walk(value) &#123;</span><br><span class="line">    <span class="keyword">const</span> keys = <span class="built_in">Object</span>.keys(value);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; keys.length; i++) &#123;</span><br><span class="line">      defineReactive(value, keys[i], value[keys[i]]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 侦测数组中的每一项</span></span><br><span class="line">  observeArray(items) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>, l = items.length; i &lt; l; i++) &#123;</span><br><span class="line">      observe(items[i]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="侦测数组新增成员的变化"><a href="#侦测数组新增成员的变化" class="headerlink" title="侦测数组新增成员的变化"></a>侦测数组新增成员的变化</h2><p>数组的<code>push</code>/<code>unshift</code>等方法时可以新增数组内容的，新增数组的内容也需要转换为响应式数据，这个过程是在数组拦截器中完成的</p>
+<p>首先要获取到新增的元素，然后对新增的元素通过上面定义的<code>Observer</code>实例上的<code>observeArray</code>方法将新增成员转换为响应式数据：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 改写数组的原生方法</span></span><br><span class="line">[<span class="string">'push'</span>, <span class="string">'pop'</span>, <span class="string">'shift'</span>, <span class="string">'unshift'</span>, <span class="string">'reverse'</span>, <span class="string">'sort'</span>, <span class="string">'splice'</span>].forEach(<span class="function">(<span class="params">method</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> original = arrayProto[method];</span><br><span class="line">  def(arrayMethods, method, <span class="function"><span class="keyword">function</span> <span class="title">mutator</span>(<span class="params">...args</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> result = original.apply(<span class="keyword">this</span>, args);</span><br><span class="line">    <span class="keyword">const</span> ob = <span class="keyword">this</span>.__ob__;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> inserted;</span><br><span class="line">    <span class="keyword">switch</span> (method) &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">'push'</span>:</span><br><span class="line">      <span class="keyword">case</span> <span class="string">'unshift'</span>: &#123;</span><br><span class="line">        inserted = args;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">'splice'</span>: &#123;</span><br><span class="line">        inserted = args.slice(<span class="number">2</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (inserted) &#123;</span><br><span class="line">      ob.observeArray(inserted);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ob.dep.notify();</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="数组的限制"><a href="#数组的限制" class="headerlink" title="数组的限制"></a>数组的限制</h2><p>对Array的变化时通过拦截原型的方式实现的，这样直接使用下标修改数组，Vue是无法侦测到的，同样直接修改数组的<code>length</code>属性也是不行的</p>
+<p>实际上如果使用<code>Object.defineProperty</code>对数组的<code>key</code>做监听也是可以实现上面两种方式的响应式变化的，没有这样做，根据尤雨溪的解释是：</p>
+<blockquote>
+<p>性能代价和获得的用户体验收益不成正比</p>
+</blockquote>
+<p>具体的讨论可以看<a href="https://segmentfault.com/a/1190000015783546?_ea=4074035" target="_blank" rel="noopener">这篇文章</a>。</p>
+<h2 id="总结-1"><a href="#总结-1" class="headerlink" title="总结"></a>总结</h2><p>Array追踪变化的方式与Object不一样，它是通过方法来改变内容的，所以通过创建拦截器去覆盖数组原型的方式来追踪变化</p>
+<p>Array中收集依赖的方式和Object一样，都是在<code>getter</code>中手机，但由于使用依赖的位置不同，数组要在拦截器中向依赖发消息，所以依赖不能像Objet一样保存在<code>defineRactive</code>中，而是保存在了<code>Obersever</code>实例上</p>
+<p>Observer中，把每个侦测了变化的数据都标记<code>__ob__</code>，并把<code>this</code>（Observer实例）保存在<code>__ob__</code>上，这样①可以标记数据是否被侦测了变化，保证每个数据只被侦测一次②通过数数据获取到<code>__ob__</code>，从而拿到Observer上保存的依赖，当拦截到数组发生变化时，向依赖发送通过</p>
+<p>除了侦测数组自身的变化外，数组中元素的变化也要侦测。在Observer中判断如果当前被侦测的数据是数组，则调用<code>observerArray</code>方法将数组每个元素都转换为响应式</p>
+<p>除了侦测已有数据外，当用户使用<code>push</code>等方法向数组中新增数据时，新增的数据也要进行变化侦测。如果操作数组的是<code>push</code>、<code>unshift</code>、<code>splice</code>方法，则从参数中将数据提取出来，使用<code>observer</code>对新增数据进行变化侦测。</p>
+<h1 id="变化侦测的API实现原理"><a href="#变化侦测的API实现原理" class="headerlink" title="变化侦测的API实现原理"></a>变化侦测的API实现原理</h1><h2 id="vm-watch"><a href="#vm-watch" class="headerlink" title="vm.$watch"></a><code>vm.$watch</code></h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> unwatch = vm.$watch(expOrFn, callback, [options]);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 取消观察</span></span><br><span class="line">unwatch();</span><br></pre></td></tr></table></figure>
+<h3 id="expOrFn支持函数的改造"><a href="#expOrFn支持函数的改造" class="headerlink" title="expOrFn支持函数的改造"></a><code>expOrFn</code>支持函数的改造</h3><p><code>expOrFn</code>表达式只接受以点分割的路径，如果是复杂的表示，可以用函数代替。</p>
+<p><code>vm.$watch</code>是对Watcher的一种封装，目前的Watcher结构不支持<code>expOrFn</code>为函数，进行一点改造：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Watcher</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(vm, expOrFn, cb) &#123;</span><br><span class="line">    <span class="keyword">this</span>.vm = vm;</span><br><span class="line">    <span class="keyword">this</span>.cb = cb;</span><br><span class="line">    <span class="comment">// expOrFn 支持函数</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> expOrFn === <span class="string">'function'</span>) &#123;</span><br><span class="line">      <span class="keyword">this</span>.getter = expOrFn;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">this</span>.getter = parsePath(expOrFn);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.value = <span class="keyword">this</span>.get();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  get() &#123;</span><br><span class="line">    <span class="built_in">window</span>.target = <span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">this</span>.value = <span class="keyword">this</span>.getter.call(<span class="keyword">this</span>.vm, <span class="keyword">this</span>.vm);</span><br><span class="line">    <span class="built_in">window</span>.target = <span class="literal">undefined</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.value;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  update() &#123;</span><br><span class="line">    <span class="keyword">const</span> oldValue = <span class="keyword">this</span>.value;</span><br><span class="line">    <span class="keyword">this</span>.value = <span class="keyword">this</span>.get();</span><br><span class="line">    <span class="keyword">this</span>.cb.call(<span class="keyword">this</span>.vm, <span class="keyword">this</span>.value, oldValue);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当<code>expOrFn</code>为函数时，函数中所读取的所有Vue实例上的响应式数据都会被Watcher所观察（因为或在函数中获取数据的值，在所有数据的<code>get</code>中会将这个Watcher收集到<code>dep</code>中）</p>
+<blockquote>
+<p>实际上Vue的计算属性实现原理与<code>expOrFn</code>支持函数关系很大</p>
+</blockquote>
+<h3 id="watch的实现"><a href="#watch的实现" class="headerlink" title="watch的实现"></a><code>watch</code>的实现</h3><p>这样Watcher可以实现<code>vm.$watch</code>的功能，但是参数<code>deep</code>和<code>immediate</code>需要对Watcher进行改造才可以实现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Vue.prototype.$watch = <span class="function"><span class="keyword">function</span> (<span class="params">expOrFn, cb, options</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> vm = <span class="keyword">this</span>;</span><br><span class="line">  options = options || &#123;&#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> watcher = <span class="keyword">new</span> Watcher(vm, expOrFn, cb, options);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (options.immediate) &#123;</span><br><span class="line">    cb.call(vm, watcher.value);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">unwatch</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    watcher.teardown();</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="Watcher的teardown方法"><a href="#Watcher的teardown方法" class="headerlink" title="Watcher的teardown方法"></a>Watcher的<code>teardown</code>方法</h3><p><code>teardown</code>方法用来取消观察数据，本质是把<code>watcher</code>从观察的所有状态的依赖列表中移除，要实现这个方法，需要：</p>
+<ol>
+<li>在Watcher中记录自己都订阅了谁，也就是<code>watcher</code>实例被收集进入了哪些Dep里</li>
+<li>不想继续订阅这些Dep时，循环自己的订阅列表通过Dep来将自己从Dep的依赖列表中移除</li>
+</ol>
+<p>这就需要对收集依赖部分的代码进行改造，首先在Watcher中添加<code>addDep</code>方法，用来在<code>watcher</code>中记录自己都订阅过哪些Dep：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Watcher</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(vm, expOrFn, cb) &#123;</span><br><span class="line">    <span class="keyword">this</span>.vm = vm;</span><br><span class="line">    <span class="keyword">this</span>.cb = cb;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 记录自己订阅的依赖列表</span></span><br><span class="line">    <span class="keyword">this</span>.deps = [];</span><br><span class="line">    <span class="comment">// 依赖列表的 Id</span></span><br><span class="line">    <span class="keyword">this</span>.depIds = <span class="keyword">new</span> <span class="built_in">Set</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// expOrFn 支持函数</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> expOrFn === <span class="string">'function'</span>) &#123;</span><br><span class="line">      <span class="keyword">this</span>.getter = expOrFn;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">this</span>.getter = parsePath(expOrFn);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.value = <span class="keyword">this</span>.get();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  addDep(dep) &#123;</span><br><span class="line">    <span class="keyword">const</span> id = dep.id;</span><br><span class="line">    <span class="keyword">if</span>(!<span class="keyword">this</span>.depIds.has(id)) &#123;</span><br><span class="line">      <span class="keyword">this</span>.depIds.add(id);</span><br><span class="line">      <span class="keyword">this</span>.deps.push(dep);</span><br><span class="line">      <span class="comment">// 将自己（watcher实例）添加的 dep 的 subs 列表中</span></span><br><span class="line">      dep.addSub(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Dep中对应的收集依赖的逻辑也要有所改变：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> uid = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dep</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="keyword">this</span>.id = uid++;</span><br><span class="line">    <span class="keyword">this</span>.subs = [];</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  depend() &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">window</span>.target) &#123;</span><br><span class="line">      <span class="comment">// this.addSub(window.target);</span></span><br><span class="line">      <span class="built_in">window</span>.target.addDep(<span class="keyword">this</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>window.target</code>就是<code>watcher</code>实例，执行<code>addDep</code>方法时，Watcher会记录自己会被哪些Dep通知，Dep也会记录数据变化时需要通知哪些Watcher，这是一个多对多的关系（正因为<code>expOrFn</code>可能是函数，里面可能会订阅多个响应式数据）</p>
+<p>这样在Watcher中就可以添加<code>teardown</code>方法来解除观察，通知自己订阅的Dep，让它们把自己从依赖列表中移除掉：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Watcher</span> </span>&#123;</span><br><span class="line">  <span class="comment">//  从所有依赖项的 Dep 列表中把自己移除</span></span><br><span class="line">  teardown() &#123;</span><br><span class="line">    <span class="keyword">let</span> i = <span class="keyword">this</span>.deps.length;</span><br><span class="line">    <span class="keyword">while</span>(i--) &#123;</span><br><span class="line">      <span class="keyword">this</span>.deps[i].removeSub(<span class="keyword">this</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在Dep中的<code>removeSub</code>方法会把watcher实例从自己的subs中移除掉：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dep</span> </span>&#123;</span><br><span class="line">  removeSub(sub) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.subs.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="keyword">const</span> index = <span class="keyword">this</span>.subs.indexOf(sub);</span><br><span class="line">      <span class="keyword">if</span> (index &gt; <span class="number">-1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.subs.splice(index, <span class="number">1</span>)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="deep参数的实现原理"><a href="#deep参数的实现原理" class="headerlink" title="deep参数的实现原理"></a><code>deep</code>参数的实现原理</h3><p><code>deep</code>参数的功能实现，就是除了要触发当前这个被监听数据的收集依赖的逻辑之外，还要把当前监听的这个值在内的所有子值都要触发一遍收集依赖逻辑。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Watcher</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(vm, expOrFn, cb, options) &#123;</span><br><span class="line">    <span class="keyword">this</span>.vm = vm;</span><br><span class="line">    <span class="keyword">this</span>.cb = cb;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (options) &#123;</span><br><span class="line">      <span class="keyword">this</span>.deep = !!options.deep;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">this</span>.deep = <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  get() &#123;</span><br><span class="line">    <span class="built_in">window</span>.target = <span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">this</span>.value = <span class="keyword">this</span>.getter.call(<span class="keyword">this</span>.vm, <span class="keyword">this</span>.vm);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// deep 逻辑</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.deep) &#123;</span><br><span class="line">      traverse(<span class="keyword">this</span>.value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">window</span>.target = <span class="literal">undefined</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.value;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>traverse</code>方法就是用来递归<code>value</code>的所有子值来触发它们依赖的功能：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 递归收集依赖</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">traverse</span>(<span class="params">val</span>) </span>&#123;</span><br><span class="line">  _traverse(val, seenObjects);</span><br><span class="line">  seenObjects.clear();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">_traverse</span>(<span class="params">val, seen</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">let</span> i, keys;</span><br><span class="line">  <span class="keyword">const</span> isA = <span class="built_in">Array</span>.isArray(val);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> ((!isA &amp;&amp; !isObject(val)) || <span class="built_in">Object</span>.isFrozen(val)) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (val.__ob__) &#123;</span><br><span class="line">    <span class="keyword">const</span> depId = val.__ob__.dep.id;</span><br><span class="line">    <span class="keyword">if</span> (seen.has(depId)) &#123;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    seen.add(depId);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (isA) &#123;</span><br><span class="line">    i = val.length;</span><br><span class="line">    <span class="keyword">while</span> (i--) &#123;</span><br><span class="line">      _traverse(val[i], seen);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    keys = <span class="built_in">Object</span>.keys(val);</span><br><span class="line">    i = keys.length;</span><br><span class="line">    <span class="keyword">while</span> (i--) &#123;</span><br><span class="line">      _traverse(val[[keys[i]]], seen);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的关键是，当数据的类型为<code>Object</code>时，循环<code>Object</code>中所有的<code>key</code>，然后执行了读取操作，然后再递归子值：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (i--) &#123;</span><br><span class="line"> _traverse(val[[keys[i]]], seen);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中<code>val[[keys[i]]</code>会触发<code>getter</code>，也就是说会触发收集依赖的操作，这时候<code>window.target</code>还未被清空，会将当前的<code>watcher</code>收集进去。</p>
+<h2 id="vm-set"><a href="#vm-set" class="headerlink" title="vm.$set"></a><code>vm.$set</code></h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vm.$set(target, key, value);</span><br><span class="line"><span class="comment">// target 需要时响应式数据，但不能是Vue实例或者Vue实例的根数据对象</span></span><br></pre></td></tr></table></figure>
+<p>这个API主要是用来避开Vue无法侦测属性被添加的限制。</p>
+<h3 id="target是数组"><a href="#target是数组" class="headerlink" title="target是数组"></a><code>target</code>是数组</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">set</span>(<span class="params">target, key, val</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 处理数组的情况</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">Array</span>.isArray(target) &amp;&amp; isValidArrayIndex(key)) &#123;</span><br><span class="line">    target.length = <span class="built_in">Math</span>.max(target.length, key);</span><br><span class="line">    target.splice(key, <span class="number">1</span>, val);</span><br><span class="line">    <span class="keyword">return</span> val;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>要注意的是，判断<code>key</code>与数组的长度，如果大于数组的长度，要给数组“扩容”，然后通过改造后的<code>splice</code>方法来收集依赖</p>
+<h3 id="key已经存在于target"><a href="#key已经存在于target" class="headerlink" title="key已经存在于target"></a><code>key</code>已经存在于<code>target</code></h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">set</span>(<span class="params">target, key, val</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 处理数组的情况</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">Array</span>.isArray(target) &amp;&amp; isValidArrayIndex(key)) &#123;</span><br><span class="line">    target.length = <span class="built_in">Math</span>.max(target.length, key);</span><br><span class="line">    target.splice(key, <span class="number">1</span>, val);</span><br><span class="line">    <span class="keyword">return</span> val;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// key 已存在</span></span><br><span class="line">  <span class="keyword">if</span> (key <span class="keyword">in</span> target &amp;&amp; !(key <span class="keyword">in</span> <span class="built_in">Object</span>.prototype)) &#123;</span><br><span class="line">    target[key] = val;</span><br><span class="line">    <span class="keyword">return</span> val;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>key</code>已经存在<code>target</code>里，那么这个<code>key</code>实际上已经是响应式的了，这时候直接用<code>key</code>和<code>val</code>直接修改数据就好了</p>
+<h3 id="新增属性"><a href="#新增属性" class="headerlink" title="新增属性"></a>新增属性</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">set</span>(<span class="params">target, key, val</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 处理数组的情况</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">Array</span>.isArray(target) &amp;&amp; isValidArrayIndex(key)) &#123;</span><br><span class="line">    target.length = <span class="built_in">Math</span>.max(target.length, key);</span><br><span class="line">    target.splice(key, <span class="number">1</span>, val);</span><br><span class="line">    <span class="keyword">return</span> val;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// key 已存在</span></span><br><span class="line">  <span class="keyword">if</span> (key <span class="keyword">in</span> target &amp;&amp; !(key <span class="keyword">in</span> <span class="built_in">Object</span>.prototype)) &#123;</span><br><span class="line">    target[key] = val;</span><br><span class="line">    <span class="keyword">return</span> val;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 新增属性</span></span><br><span class="line">  <span class="keyword">const</span> ob = target.__ob__;</span><br><span class="line">  <span class="comment">// target 是 Vue 实例，或者是 Vue 实例的根数据对象</span></span><br><span class="line">  <span class="keyword">if</span> (target._isVue || (ob &amp;&amp; ob.vmCount)) &#123;</span><br><span class="line">    process.env.NODE_ENV !== <span class="string">'production'</span> ** <span class="built_in">console</span>.warn(<span class="string">'...'</span>);</span><br><span class="line">    <span class="keyword">return</span> val;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!ob) &#123;</span><br><span class="line">    target[key] = val;</span><br><span class="line">    <span class="keyword">return</span> val;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  defineReactive(ob.value, key, val);</span><br><span class="line">  ob.dep.notify();</span><br><span class="line">  <span class="keyword">return</span> val;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>先获取<code>target</code>的<code>observer</code>实例，即<code>__ob__</code>属性。然后根据<code>_isVue</code>判断<code>target</code>是否是Vue实例，用<code>ob.vmCount</code>来判断是否是根数据对象（及根节点的数据对象<code>this.$data</code>），这两种情况都不需要处理</p>
+<p>如果<code>target.__ob__</code>不存在，那么说明<code>target</code>不是响应式的，也不需要任何处理，直接赋值即可。</p>
+<p>如果上面所有条件不满足，才证明用户是为一个响应式数据新增了一个属性，这是用<code>defineReactive</code>来将<code>ob.value</code>（即响应式数据对象）上添加<code>key</code>和<code>value</code>，并且将属性转换为getter/setter的形式，最后想<code>target</code>的依赖发送通知，并返回<code>val</code></p>
+<h2 id="vm-delete"><a href="#vm-delete" class="headerlink" title="vm.$delete"></a><code>vm.$delete</code></h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vm.$<span class="keyword">delete</span>(target, key)</span><br></pre></td></tr></table></figure>
+<p>过程还是比较简单的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">del</span>(<span class="params">target, key</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 先处理数组的情况</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">Array</span>.isArray(target) &amp;&amp; isValidArrayIndex(key)) &#123;</span><br><span class="line">    <span class="comment">// 使用改造后的数组的 splice 方法就可以做到响应式删除，自动向依赖发送更新</span></span><br><span class="line">    target.splice(key, <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> ob = target.__ob__;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 如果是 Vue 实例或者是根数据对象，则不能使用这个方法</span></span><br><span class="line">  <span class="keyword">if</span> (target._isVue || (ob &amp;&amp; ob.vmCount)) &#123;</span><br><span class="line">    process.env.NODE_ENV !== <span class="string">'production'</span> ** <span class="built_in">console</span>.warn(<span class="string">'...'</span>);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 如果不是自身的属性，那么什么也不操作</span></span><br><span class="line">  <span class="keyword">if</span> (!<span class="built_in">Object</span>.prototype.hasOwnProperty.call(target, key)) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">delete</span> target[key];</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 如果不是响应式数据，也就不需要向依赖发送通知</span></span><br><span class="line">  <span class="keyword">if</span> (!ob) &#123;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  ob.dep.notify();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="虚拟DOM"><a href="#虚拟DOM" class="headerlink" title="虚拟DOM"></a>虚拟DOM</h1><h2 id="为什么要引入虚拟DOM"><a href="#为什么要引入虚拟DOM" class="headerlink" title="为什么要引入虚拟DOM"></a>为什么要引入虚拟DOM</h2><p>Vue的依赖订阅机制，可以再一定程度上知道哪些状态发生了变化。在Vue1.0中并没有引入虚拟DOM，当状态发生变化，Vue知道哪些节点使用了这个状态，从而对这些节点进行更新操作，不需要对比</p>
+<p>这样做的代价是，粒度太细，导致内存开销过大。</p>
+<p>所以在Vue2.0中选择了中等粒度的解决方案，引入了虚拟DOM。组件级别是一个Watcher实例，当状态发生变化时，只能通知到组件，然后组件内部通过虚拟DOM来进行比对和渲染。</p>
+<h2 id="Vue中的虚拟DOM"><a href="#Vue中的虚拟DOM" class="headerlink" title="Vue中的虚拟DOM"></a>Vue中的虚拟DOM</h2><p>Vue中使用模板来描述状态与DOM间的映射关系。Vue通过编译将模板转换为渲染函数，执行渲染函数就可以得到虚拟节点树，使用这个虚拟节点树来渲染页面。</p>
+<p>为了避免整体替换vnode带来的性能浪费，虚拟DOM在做虚拟节点映射到视图的过程中，会与旧的虚拟节点进行比对（diff），找出需要更新的节点来进行DOM操作</p>
+<p>虚拟DOM完成的事情也就是：</p>
+<ol>
+<li>提供与真实DOM节点所对应的虚拟节点vnode</li>
+<li>将虚拟节点vnode和旧的虚拟节点oldVnode进行比对，然后更新视图</li>
+</ol>
+<h1 id="VNode"><a href="#VNode" class="headerlink" title="VNode"></a>VNode</h1><p>vnode可以理解为节点描述对象，它描述了怎么样去创建真实的DOM节点，它只是一个普通的对象，是从VNode类实例化的对象。</p>
+<p>vnode有不同类型：</p>
+<ul>
+<li>注释节点</li>
+<li>文本节点</li>
+<li>元素节点</li>
+<li>组件节点</li>
+<li>函数式组件</li>
+<li>克隆节点</li>
+</ul>
+<h2 id="注释节点"><a href="#注释节点" class="headerlink" title="注释节点"></a>注释节点</h2><p>节点：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 注释节点 --&gt;</span></span><br></pre></td></tr></table></figure>
+<p>对应的vnode：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  text: <span class="string">'注释节点'</span>,</span><br><span class="line">  isComment: <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>创建过程：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> createEmptyVNode = <span class="function">(<span class="params">text</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> node = <span class="keyword">new</span> VNode();</span><br><span class="line">  node.text = text;</span><br><span class="line">  node.isComment = <span class="literal">true</span>;</span><br><span class="line">  <span class="keyword">return</span> node;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="文本节点"><a href="#文本节点" class="headerlink" title="文本节点"></a>文本节点</h2><p>vnode：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  text: <span class="string">'Hello Vue'</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>创建过程：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> createTextVNode = <span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> VNode(<span class="literal">undefined</span>, <span class="literal">undefined</span>, <span class="literal">undefined</span>, <span class="built_in">String</span>(value));</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="克隆节点"><a href="#克隆节点" class="headerlink" title="克隆节点"></a>克隆节点</h2><p>克隆节点是将享有的节点属性复制到新节点中，让新创建的节点和被克隆节点的属性保持一致，实现克隆效果。作用是优化静态节点和插槽节点</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> cloneVNode = <span class="function">(<span class="params">vnode, deep</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> cloned = <span class="keyword">new</span> VNode(</span><br><span class="line">    vnode.tag,</span><br><span class="line">    vnode.data,</span><br><span class="line">    vnode.children,</span><br><span class="line">    vnode.text,</span><br><span class="line">    vnode.elm,</span><br><span class="line">    vnode.context,</span><br><span class="line">    vnode.componentOptions,</span><br><span class="line">    vnode.asyncFactory</span><br><span class="line">  );</span><br><span class="line"></span><br><span class="line">  cloned.ns = vnode.ns;</span><br><span class="line">  cloned.isStatic = vnode.isStatic;</span><br><span class="line">  cloned.key = vnode.key;</span><br><span class="line">  cloned.isComment = vnode.isComment;</span><br><span class="line">  cloned.isCloned = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (deep &amp;&amp; vnode.children) &#123;</span><br><span class="line">    cloned.children = cloneVNode(vnode.children);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> cloned;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>克隆节点就是将现有的节点的属性全部复制到新节点中，除了<code>isCloned</code>属性为<code>true</code></p>
+<h2 id="元素节点"><a href="#元素节点" class="headerlink" title="元素节点"></a>元素节点</h2><p>元素节点有四个属性：</p>
+<ul>
+<li><code>tag</code>，节点名称，例如<code>ul</code>、<code>p</code></li>
+<li><code>data</code>，包含节点上的数据，<code>attrs</code>、<code>class</code>、<code>style</code>等</li>
+<li><code>children</code>，子节点列表</li>
+<li><code>context</code>，当前组件的Vue实例</li>
+</ul>
+<p>元素节点：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span>Hello<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span>Vue<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>vnode:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  children: [VNode, Vnode],</span><br><span class="line">  context: &#123;...&#125;</span><br><span class="line">  data: &#123;...&#125;,</span><br><span class="line">  tag: <span class="string">'p'</span>,</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="组件节点"><a href="#组件节点" class="headerlink" title="组件节点"></a>组件节点</h2><p>组件节点和元素节点类似，有两个独有的属性：</p>
+<ul>
+<li><code>componentOptions</code>，组件节点的选项参数，包含<code>propsData</code>、<code>tag</code>等</li>
+<li><code>compontentInstance</code>，Vue实例</li>
+</ul>
+<h2 id="函数式组件"><a href="#函数式组件" class="headerlink" title="函数式组件"></a>函数式组件</h2><p>与组件节点类似，有特有的属性<code>functionalContext</code>和<code>functionalOptions</code></p>
+<h1 id="patch"><a href="#patch" class="headerlink" title="patch"></a>patch</h1><p>patch的目的是修改DOM节点，渲染视图。它不是暴力替换节点，而是在现有的DOM上修改来达到渲染视图的目的，包含三个过程：</p>
+<ol>
+<li>创建新节点</li>
+<li>删除废弃节点</li>
+<li>更新已存在节点</li>
+</ol>
+<p>整个patch的过程是:</p>
+<ol>
+<li>当oldVnode不存在时，直接使用vnode渲染视图</li>
+<li>当oldVnode和vnode都存在，但不是同一个节点时，使用vnode创建的新DOM元素替换旧的DOM元素</li>
+<li>当oldVnode和vnode都存在并且是同一个节点时，使用更详细的对比操作来局部更新真实DOM</li>
+</ol>
+<p><img src="http://image.oldzhou.cn/FjhcC9MMhk9dQJR9lNHE4pcIG1NV" alt=""></p>
+<h2 id="创建节点"><a href="#创建节点" class="headerlink" title="创建节点"></a>创建节点</h2><p>只有元素节点、注释节点和文本节点会被创建并插入到DOM中</p>
+<p>有<code>tag</code>属性就可以判定是一个元素节点，然后调用<code>document.createElement</code>方法创建真实的元素节点</p>
+<p>然后调用<code>parentNode.appendChild</code>来将元素插入到父节点，如果这个父节点已经被渲染到视图，那么插入到这个父节点下的元素也会被渲染到视图</p>
+<p>然后需要将元素节点的子节点也创建出来并插入到刚刚创建出的节点下面，这是一个递归过程，需要将vnode的children属性循环一遍，将每个子虚拟节点都执行一遍创建元素的逻辑。</p>
+<p>如果vnode的<code>tag</code>属性不存在，并且<code>isComment</code>为<code>true</code>，那么认为是注释节点，调用<code>document.createComment</code>方法，创建注释节点。如果<code>isComment</code>为<code>false</code>，那么就调用<code>document.createTextNode</code>创建真是的文本节点</p>
+<h2 id="删除节点"><a href="#删除节点" class="headerlink" title="删除节点"></a>删除节点</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isDef</span>(<span class="params">v</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> v !== <span class="literal">undefined</span> &amp;&amp; v !== <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> nodeOps = &#123;</span><br><span class="line">  parentNode(node) &#123;</span><br><span class="line">    <span class="keyword">return</span> node.parentNode;</span><br><span class="line">  &#125;,</span><br><span class="line">  removeNode(node, child) &#123;</span><br><span class="line">    node.removeChild(child);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">removeNode</span>(<span class="params">el</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> parent = nodeOps.parentNode(el);</span><br><span class="line">  <span class="keyword">if</span> (isDef(parent)) &#123;</span><br><span class="line">    nodeOps.removeNode(parent, el);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>nodeOps</code>是对节点操作的封装，目的是为了进行实现跨平台运行时API对接。</p>
+<h2 id="更新节点"><a href="#更新节点" class="headerlink" title="更新节点"></a>更新节点</h2><h3 id="静态节点"><a href="#静态节点" class="headerlink" title="静态节点"></a>静态节点</h3><p>静态节点指的就是渲染到界面上后，无论日后状态如何变化，都不会发生改变的节点</p>
+<p>如果新旧两个虚拟节点都是静态节点，如果是的话就可以直接跳过更新节点的过程。</p>
+<h3 id="新虚拟节点有文本属性"><a href="#新虚拟节点有文本属性" class="headerlink" title="新虚拟节点有文本属性"></a>新虚拟节点有文本属性</h3><p>如果新生成的虚拟节点有<code>text</code>属性，那么无论之前的旧节点的子节点是什么，直接调用<code>setTextContext</code>方法（在浏览器环境下是<a href="https://wiki.developer.mozilla.org/zh-CN/docs/Web/API/Node/textContent" target="_blank" rel="noopener"><code>node.textContext</code></a>方法）</p>
+<h3 id="新虚拟节点无文本属性"><a href="#新虚拟节点无文本属性" class="headerlink" title="新虚拟节点无文本属性"></a>新虚拟节点无文本属性</h3><p>这时候新的虚拟节点是一个元素节点，根据是否有<code>children</code>属性，存在两种情况：</p>
+<p>（1）新的虚拟节点有<code>children</code></p>
+<p>如果旧的虚拟节点也有<code>children</code>属性，那么需要对新、旧虚拟节点的<code>children</code>进行详细的diff</p>
+<p>如果旧的虚拟节点没有<code>children</code>属性，那么旧 的虚拟节点可能是文本节点或者是空标签，如果是文本节点，那么就要将文本清空将其变为空标签，然后将新的虚拟节点的<code>children</code>创建为真实DOM元素插入进去</p>
+<p>（2）新的虚拟节点没有<code>children</code></p>
+<p>这时候新的虚拟节点是一个空节点，那么会对旧的虚拟节点进行删除，达到视图中是空标签的目的</p>
+<p><img src="http://image.oldzhou.cn/FhMU5iQv9B7TnNNDA6z2lwuQYnD0" alt=""></p>
+<h2 id="更新子节点"><a href="#更新子节点" class="headerlink" title="更新子节点"></a>更新子节点</h2><p>更新子节点可以分为四种操作：</p>
+<ul>
+<li>更新节点</li>
+<li>新增节点</li>
+<li>删除节点</li>
+<li>移动节点</li>
+</ul>
+<p>更新子节点要进行循环，先遍历新的子节点列表，每循环到一个新的子节点，就会去旧子节点列表中找和当前节点相同的节点。如果找不到，就进行新增；如果找到了就做更新操作；如果位置不同，就进行移动</p>
+<h3 id="更新策略"><a href="#更新策略" class="headerlink" title="更新策略"></a>更新策略</h3><p>（1）创建子节点</p>
+<p>如果在遍历oldChildren时，没有找到本次循环（外层循环）所指向的新子节点相同的节点，那么意味着这个新子节点是一个新增子节点，需要执行创建节点操作，并且<strong>插入到oldChildren中所有没有处理的节点的前面</strong></p>
+<p>没有插入到所有已处理后节点的后面，是因为有可能会有连续几个新增节点，如果都插入到已处理后的节点的后面，那么插入的顺序是相反的</p>
+<p>例如，如果有两个新增节点，插入到oldChildRen的没有处理的节点前面，顺序正确：</p>
+<p><img src="http://image.oldzhou.cn/Fr0ytebuoer4n2eoZCBquc76b2hd" alt=""></p>
+<p>如果插入到已处理的节点的后面，那么顺序是相反的：</p>
+<p><img src="http://image.oldzhou.cn/FiZjL_XRKiL0KYqSvnvetFfGZRzV" alt=""></p>
+<p>（2）更新子节点</p>
+<p>如果两个节点是同一个节点，并且位置相同，那么这时候只需要进行更新操作即可</p>
+<p>（3）移动子节点</p>
+<p>当新旧节点是同一个节点，但是位置不同时，会进行移动操作，调用的是<code>Node.insertBefore</code>方法</p>
+<p>关键是得到将旧的节点移动到的位置，这个位置是当前所有未处理节点的第一个节点</p>
+<blockquote>
+<p>新增和移动节点的位置，都是以未处理节点进行标定位置的</p>
+</blockquote>
+<p><img src="http://image.oldzhou.cn/FpXbMrMSvqR9BbHt4hA86oySIxSa" alt=""></p>
+<p>（4）删除子节点</p>
+<p>本质上是删除那些oldChildren中存在但是newChildren中不存在的节点</p>
+<p>当newChildren中的所有节点都被循环了一遍后，也就是循环结束后，如果oldChildren中还有剩余没被处理的节点，那么这些节点就要被删除</p>
+<h3 id="优化策略"><a href="#优化策略" class="headerlink" title="优化策略"></a>优化策略</h3><p>可以使用下面四种快速查找节点的方式，这四种方式可以涵盖大多数的节点变化的情况，从而来避免循环oldChildren来查找节点，提升执行速度</p>
+<ul>
+<li>将『新前』与『旧前』比对</li>
+<li>将『新后』与『旧后』比对</li>
+<li>将『新后』与『旧前』对比</li>
+<li>将『新前』与『旧后』对比</li>
+</ul>
+<p><img src="http://image.oldzhou.cn/ForjMZACaWehXBCzrYVaW9_5eDvn" alt=""></p>
+<p>前两种快捷查找方式，不需要执行移动节点的操作，只需要更新节点即可</p>
+<p>后两种方式，除了更新节点外，还需要执行移动节点的操作。</p>
+<p>在将『新后』与『旧前』对比时，如果二者是通过一个节点，在真实DOM中除了做更新操作外，还需要将节点移动到oldChildren中<strong>所有未处理节点的最后面</strong></p>
+<p><img src="http://image.oldzhou.cn/FpndwBHawiNvZ_LhhzZToBKuCrh4" alt=""></p>
+<p>这样移动才能保证下一轮移动时顺序是正确的，即下一轮的新后会在上一轮新后的前面</p>
+<p>第四种比对方式与与第三种是类似的，需要将节点移动到oldChildren中<strong>所有未处理节点的最前面</strong></p>
+<p><img src="http://image.oldzhou.cn/FpLaebaATQeFLD9440aoEaiGY3gX" alt=""></p>
+<p>要记住的就是，移动都是以oldChildren中未处理的节点为基准进行，所有已更新过的节点不用管。</p>
+<p>如果上面4中比对方式都没有找到相同的节点，那么再去通过循环的方式去oldChildren中详细找一圈</p>
+<h3 id="判断节点是否被处理过"><a href="#判断节点是否被处理过" class="headerlink" title="判断节点是否被处理过"></a>判断节点是否被处理过</h3><p>实际上，并不是通过节点本身的属性来表示节点是否被处理过，而是通过循环来控制，循环体内只包含未处理过的节点，通过这一特性来实现，将处理过的节点剔除的</p>
+<p>通常的遍历，无论是从前到后，或是从后到前，自然而然就会实现上面说的效果，处理后的节点不会进入下一轮循环</p>
+<p>但是由于上面提到的优化策略，在循环体内，有可能处理的是未处理节点中的第一个，也可能是最后一个，所以就不能是从前向后循环，而应该是<strong>从两边向中间循环</strong></p>
+<p>Vue使用了四个变量，来标识循环的起始位置：</p>
+<ul>
+<li><code>oldStartIdx</code></li>
+<li><code>oldEndIdx</code></li>
+<li><code>newStartIdx</code></li>
+<li><code>newEndIdx</code></li>
+</ul>
+<p>在循环体内，每处理一个节点，就将下标向指定的方向移动一个位置。处理时一般是对两个节点进行操作，相当于一次处理两个节点，就会将新、就两个节点各向指定方向移动一个位置</p>
+<p><code>oldStartIdx</code>和<code>newStartIdx</code>只能向后移动，<code>oldEndIdx</code>和<code>newEndIdx</code>只能向前移动，当开始位置大于等于结束位置时，说明所有节点都遍历过了，结束循环</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(oldStartIdx &lt;= oldEndIdx &amp;&amp; newStartIdx &lt;= newEndIdx) &#123;</span><br><span class="line">  <span class="comment">// 比对节点</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果新旧节点数量不一致时，循环不会覆盖所有节点，这样正是预期的结果，如果newChildren中有没遍历的节点（即下标在<code>newStartIdx</code>和<code>newEndIdx</code>之间的节点），那么说明这些节点都是需要新增的节点（即下标在<code>oldStartIdx</code>和<code>oldEndIdx</code>之间的节点），直接插入DOM就行。如果oldChilren中有未遍历的节点，那么这些都是要删除的节点，直接删除即可</p>
+<p>这样可以减少一部分遍历次数，提升性能</p>
+<h3 id="key"><a href="#key" class="headerlink" title="key"></a><code>key</code></h3><p>熏染列表时，推荐使用<code>key</code>，因为如果在列表循环时，如果设置了<code>key</code>，那么在oldChildren中循环相同节点时，就不需要通过遍历来查找节点，直接通过<code>key</code>就可以知道哦啊哦了</p>
+<p>Vue是推荐在列表渲染时使用<code>key</code>，并且使用<code>key</code>来查找子节点的方式也是排在上面提到的四种快捷查找方式之后，我理解是由于使用<code>key</code>还是需要新建一个<code>key</code>与<code>index</code>索引关系的对象，而那四种快捷查找方式并不需要新建这一个对象，为所有的组件都应<code>key</code>来进行标识，开销太大。而在列表渲染时使用<code>key</code>可以有效的提升列表顺序变化导致的循环遍历</p>
+
+      
+    </div>
+
+    
+      
+
+
+    
+
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+  <img id="wechat_subscriber_qcode" src="/images/wechat-qcode.jpg" alt="哆啦斯基周 wechat" style="width: 200px; max-width: 100%;">
+  <div>我的公众号，看心情更新，欢迎订阅！</div>
+</div>
+
+      </div>
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Vue/" rel="tag"># Vue</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/27/03 读书笔记/10 你不知道的JavaScript（上卷）/" rel="next" title="你不知道的JavaScript（上卷）">
+                <i class="fa fa-chevron-left"></i> 你不知道的JavaScript（上卷）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar3.png" alt="哆啦斯基周">
+            
+              <p class="site-author-name" itemprop="name">哆啦斯基周</p>
+              <p class="site-description motion-element" itemprop="description">一个大龄前端程序员的技术博客</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">185</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">27</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">269</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/duola8789" title="GitHub &rarr; https://github.com/duola8789" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                  
+                    
+                  
+                  <a href="mailto:duola8789@126.com" title="E-Mail &rarr; mailto:duola8789@126.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                  
+                    
+                  
+                  <a href="https://weibo.com/zhouhaozhouhao" title="Weibo &rarr; https://weibo.com/zhouhaozhouhao" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                  
+                    
+                  
+                  <a href="https://blog.csdn.net/duola8789" title="CSDN &rarr; https://blog.csdn.net/duola8789" rel="noopener" target="_blank"><i class="fa fa-fw fa-rss-square"></i></a>
+                </span>
+              
+            </div>
+          
+
+          
+             <div class="cc-license motion-element" itemprop="license">
+              
+                
+              
+              
+              
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+             </div>
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Object的变化侦测"><span class="nav-number">1.</span> <span class="nav-text">Object的变化侦测</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#如何追踪变化？"><span class="nav-number">1.1.</span> <span class="nav-text">如何追踪变化？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何收集依赖？"><span class="nav-number">1.2.</span> <span class="nav-text">如何收集依赖？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖收集在哪里"><span class="nav-number">1.3.</span> <span class="nav-text">依赖收集在哪里</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#依赖是谁"><span class="nav-number">1.4.</span> <span class="nav-text">依赖是谁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Watcher是什么"><span class="nav-number">1.5.</span> <span class="nav-text">Watcher是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何侦测所有属性"><span class="nav-number">1.6.</span> <span class="nav-text">如何侦测所有属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.7.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Array的变化侦测"><span class="nav-number">2.</span> <span class="nav-text">Array的变化侦测</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#如何追踪变化"><span class="nav-number">2.1.</span> <span class="nav-text">如何追踪变化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拦截器是什么"><span class="nav-number">2.2.</span> <span class="nav-text">拦截器是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用拦截器覆盖Array原型"><span class="nav-number">2.3.</span> <span class="nav-text">使用拦截器覆盖Array原型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何收集数组的依赖"><span class="nav-number">2.4.</span> <span class="nav-text">如何收集数组的依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在哪里那保存数组的依赖"><span class="nav-number">2.5.</span> <span class="nav-text">在哪里那保存数组的依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#收集依赖"><span class="nav-number">2.6.</span> <span class="nav-text">收集依赖</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在拦截器中获取Observer实例"><span class="nav-number">2.7.</span> <span class="nav-text">在拦截器中获取Observer实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#侦测数组成员的变化"><span class="nav-number">2.8.</span> <span class="nav-text">侦测数组成员的变化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#侦测数组新增成员的变化"><span class="nav-number">2.9.</span> <span class="nav-text">侦测数组新增成员的变化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组的限制"><span class="nav-number">2.10.</span> <span class="nav-text">数组的限制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结-1"><span class="nav-number">2.11.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#变化侦测的API实现原理"><span class="nav-number">3.</span> <span class="nav-text">变化侦测的API实现原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#vm-watch"><span class="nav-number">3.1.</span> <span class="nav-text">vm.$watch</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#expOrFn支持函数的改造"><span class="nav-number">3.1.1.</span> <span class="nav-text">expOrFn支持函数的改造</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#watch的实现"><span class="nav-number">3.1.2.</span> <span class="nav-text">watch的实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Watcher的teardown方法"><span class="nav-number">3.1.3.</span> <span class="nav-text">Watcher的teardown方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#deep参数的实现原理"><span class="nav-number">3.1.4.</span> <span class="nav-text">deep参数的实现原理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vm-set"><span class="nav-number">3.2.</span> <span class="nav-text">vm.$set</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#target是数组"><span class="nav-number">3.2.1.</span> <span class="nav-text">target是数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#key已经存在于target"><span class="nav-number">3.2.2.</span> <span class="nav-text">key已经存在于target</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新增属性"><span class="nav-number">3.2.3.</span> <span class="nav-text">新增属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vm-delete"><span class="nav-number">3.3.</span> <span class="nav-text">vm.$delete</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#虚拟DOM"><span class="nav-number">4.</span> <span class="nav-text">虚拟DOM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要引入虚拟DOM"><span class="nav-number">4.1.</span> <span class="nav-text">为什么要引入虚拟DOM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue中的虚拟DOM"><span class="nav-number">4.2.</span> <span class="nav-text">Vue中的虚拟DOM</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#VNode"><span class="nav-number">5.</span> <span class="nav-text">VNode</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#注释节点"><span class="nav-number">5.1.</span> <span class="nav-text">注释节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文本节点"><span class="nav-number">5.2.</span> <span class="nav-text">文本节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#克隆节点"><span class="nav-number">5.3.</span> <span class="nav-text">克隆节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#元素节点"><span class="nav-number">5.4.</span> <span class="nav-text">元素节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件节点"><span class="nav-number">5.5.</span> <span class="nav-text">组件节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数式组件"><span class="nav-number">5.6.</span> <span class="nav-text">函数式组件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#patch"><span class="nav-number">6.</span> <span class="nav-text">patch</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建节点"><span class="nav-number">6.1.</span> <span class="nav-text">创建节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除节点"><span class="nav-number">6.2.</span> <span class="nav-text">删除节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更新节点"><span class="nav-number">6.3.</span> <span class="nav-text">更新节点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#静态节点"><span class="nav-number">6.3.1.</span> <span class="nav-text">静态节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新虚拟节点有文本属性"><span class="nav-number">6.3.2.</span> <span class="nav-text">新虚拟节点有文本属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新虚拟节点无文本属性"><span class="nav-number">6.3.3.</span> <span class="nav-text">新虚拟节点无文本属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更新子节点"><span class="nav-number">6.4.</span> <span class="nav-text">更新子节点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#更新策略"><span class="nav-number">6.4.1.</span> <span class="nav-text">更新策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化策略"><span class="nav-number">6.4.2.</span> <span class="nav-text">优化策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判断节点是否被处理过"><span class="nav-number">6.4.3.</span> <span class="nav-text">判断节点是否被处理过</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#key"><span class="nav-number">6.4.4.</span> <span class="nav-text">key</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">哆啦斯基周</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动</div>
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.7.0"></script>
+
+  <script src="/js/src/motion.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.7.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.7.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+
+
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function (item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'Fg5UsXV9f7m1xb1SioXny6QN-gzGzoHsz',
+    appKey: 'DLV7a4oTpQynJCIelKn3L7Ja',
+    placeholder: '大侠留步，请留下您宝贵的意见',
+    avatar: 'retro',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+</script>
+
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

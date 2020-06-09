@@ -1,0 +1,2054 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=6.7.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=6.7.0">
+
+
+  <link rel="mask-icon" href="/images/logo-new.svg?v=6.7.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.7.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="JWT学习笔记。">
+<meta name="keywords" content="JWT,Json Web Token,登陆">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS42 利用JWT实现登录">
+<meta property="og:url" content="http://oldzhou.cn/2018/01/07/01 前端笔记/02 JavaScript/JS42 利用JWT实现登录/index.html">
+<meta property="og:site_name" content="不负好时光">
+<meta property="og:description" content="JWT学习笔记。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://image.oldzhou.cn/Fl_aibyiQ7_rLSLp70FbCMGIp6Ay">
+<meta property="og:updated_time" content="2020-01-15T08:45:43.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JS42 利用JWT实现登录">
+<meta name="twitter:description" content="JWT学习笔记。">
+<meta name="twitter:image" content="http://image.oldzhou.cn/Fl_aibyiQ7_rLSLp70FbCMGIp6Ay">
+
+
+
+
+
+
+  <link rel="canonical" href="http://oldzhou.cn/2018/01/07/01 前端笔记/02 JavaScript/JS42 利用JWT实现登录/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>JS42 利用JWT实现登录 | 不负好时光</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">不负好时光</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">没什么才华，就剩一点坚持</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="http://www.oldzhou.cn/pages/page1.html" rel="noopener" target="_blank"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://oldzhou.cn/2018/01/07/01 前端笔记/02 JavaScript/JS42 利用JWT实现登录/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="哆啦斯基周">
+      <meta itemprop="description" content="一个大龄前端程序员的技术博客">
+      <meta itemprop="image" content="/images/avatar3.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负好时光">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">JS42 利用JWT实现登录
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+         
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-01-07 13:05:00" itemprop="dateCreated datePublished" datetime="2018-01-07T13:05:00+00:00">2018-01-07</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-01-15 08:45:43" itemprop="dateModified" datetime="2020-01-15T08:45:43+00:00">2020-01-15</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/01/07/01 前端笔记/02 JavaScript/JS42 利用JWT实现登录/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2018/01/07/01 前端笔记/02 JavaScript/JS42 利用JWT实现登录/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>JWT学习笔记。</p>
+<a id="more"></a>
+<p>[TOC]</p>
+<h1 id="利用JWT实现登录"><a href="#利用JWT实现登录" class="headerlink" title="利用JWT实现登录"></a>利用JWT实现登录</h1><h2 id="1-什么是JWT"><a href="#1-什么是JWT" class="headerlink" title="1 什么是JWT"></a>1 什么是JWT</h2><p>JWT是JSON WEB TOKEN的缩写，是为了在网络应用环境建传递声明而执行的一种基于JSON的开放标准。该Toekn被设计为紧凑并且安全的，特别适用于分布式站点的单点登录（SSO）</p>
+<h2 id="2-传统的session认证"><a href="#2-传统的session认证" class="headerlink" title="2 传统的session认证"></a>2 传统的session认证</h2><p>传统的session认证是为了让我们的应用能识别是哪个用户发送的请求，需要在服务器存储一份用户的登陆信息，这份登陆信息会在返给用户的响应时传递给浏览器，浏览器保存为cookie，下次请求时发送给服务器，用来验证用户身份。</p>
+<p>基于session认证存在一些问题：</p>
+<ol>
+<li>用户增多，服务器保存的用户信息越来越多，服务端开销明显增大</li>
+<li>在分布式的应用上，会限制负载均衡器的能力</li>
+<li>由于是基于cookie来进行用户识别的，如果cookie被截取，会受到跨站请求伪造（CSRF）的攻击</li>
+</ol>
+<h2 id="3-基于token的鉴权机制"><a href="#3-基于token的鉴权机制" class="headerlink" title="3 基于token的鉴权机制"></a>3 基于token的鉴权机制</h2><p>基于token的鉴权机制类似于http协议，也是无状态的，不需要在服务端保留用户的认证信息或者会话信息。这就意味着基于token认证的应用不需要考虑用户在哪一台服务器登陆了，为应用的扩展提供了遍历。</p>
+<p>主要的流程如下：</p>
+<ol>
+<li>用户使用用户名和密码来请求服务器登陆</li>
+<li>服务器验证用户信息</li>
+<li>服务器对通过验证的用户下发一个token</li>
+<li>客户端收到token并存储，并且在以后的每次请求时再请求头中携带这个token</li>
+<li>服务端在收到后续请求后对token验证，通过时返回对应数据</li>
+</ol>
+<h2 id="4-JWT的构成"><a href="#4-JWT的构成" class="headerlink" title="4 JWT的构成"></a>4 JWT的构成</h2><p>JWT由三段信息构成，第一部分为头部（header），第二部分为载荷（payload），第三部分是签名（signature）</p>
+<p><img src="http://image.oldzhou.cn/Fl_aibyiQ7_rLSLp70FbCMGIp6Ay" alt=""></p>
+<h3 id="4-1-header"><a href="#4-1-header" class="headerlink" title="4.1 header"></a>4.1 header</h3><p>header用来描述描述关于该JWT的最基本的信息，承载两部分信息：</p>
+<ol>
+<li>声明类型，这里是JWT</li>
+<li>声明签名算法</li>
+</ol>
+<p>这也可以被表示成一个JSON对象。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">'typ'</span>: <span class="string">'JWT'</span>,</span><br><span class="line">  <span class="string">'alg'</span>: <span class="string">'HS256'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后将头部进行base64加密，构成了第一部分</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9</span><br></pre></td></tr></table></figure>
+<h3 id="4-2-payload"><a href="#4-2-payload" class="headerlink" title="4.2 payload"></a>4.2 payload</h3><p>载荷是存放有效信息的地方，包含三个部分：</p>
+<ol>
+<li>标准中注册的声明（建议但不强制使用）<ul>
+<li>iss: jwt签发者</li>
+<li>sub: jwt所面向的用户</li>
+<li>aud: 接收jwt的一方</li>
+<li>exp: jwt的过期时间，这个过期时间必须要大于签发时间</li>
+<li>nbf: 定义在什么时间之前，该jwt都是不可用的</li>
+<li>iat: jwt的签发时间</li>
+<li>jti: jwt的唯一身份标识，主要用来作为一次性token，从而回避重放攻击。</li>
+</ul>
+</li>
+<li>公共的声明：可以添加任何信息，一般添加用户的相关信息或其他业务需要的必要信息，但<strong>不建议添加敏感信息，因为该部分在客户端可解密</strong></li>
+<li>私有的声明：提供者和消费者所共同定义的声明，不建议存放敏感信息，因为base64编码并不是加密过程，可以归类为明文信息</li>
+</ol>
+<p>一个payload如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"sub"</span>: <span class="string">"1234567890"</span>,</span><br><span class="line">  <span class="string">"name"</span>: <span class="string">"John Doe"</span>,</span><br><span class="line">  <span class="string">"admin"</span>: <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后对其进行base64编码，得到JWT的第二部分</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9</span><br></pre></td></tr></table></figure>
+<h3 id="4-3-signature"><a href="#4-3-signature" class="headerlink" title="4.3 signature"></a>4.3 signature</h3><p>签名信息由三个部分组成：</p>
+<ol>
+<li>header（base64编码后的）</li>
+<li>payload（base64编码后的）</li>
+<li>secret</li>
+</ol>
+<p>secret是利用HS256T算法进行加密时的密钥，将header和payload使用secret进行加密后，构成了jwt的第三部分</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// javascript</span></span><br><span class="line"><span class="keyword">var</span> encodedString = base64UrlEncode(header) + <span class="string">'.'</span> + base64UrlEncode(payload);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> signature = HMACSHA256(encodedString, <span class="string">'secret'</span>); <span class="comment">// TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ</span></span><br></pre></td></tr></table></figure>
+<p>将这三部分用<code>.</code>连接成一个完整的字符串，构成了最终的jwt</p>
+<p><strong>注意，jwt的签发生成是在服务器端的，secret是保存在服务端的，用来进行jwt的签发和验证。它是服务端的密钥，在任何场景都不应该流出。一旦客户端得到这个sercret，那就意味着客户端可以自我签发jwt了。</strong></p>
+<h2 id="5-如何存储发送JWT"><a href="#5-如何存储发送JWT" class="headerlink" title="5 如何存储发送JWT"></a>5 如何存储发送JWT</h2><p>一般来说，有两种方案来存储和发送JWT：</p>
+<h3 id="5-1-利用Cookie"><a href="#5-1-利用Cookie" class="headerlink" title="5.1 利用Cookie"></a>5.1 利用Cookie</h3><p>第一种是将由服务端下发一个cookie，并且设置<code>HttpOnly</code>（还可以设置<code>secure</code>，确保cookie只通过Https来传输），将JWT放在这个cookie中，当发送请求时自动带着这个cookie进行请求。</p>
+<p>它的优点是，黑客无法直接读取设置了<code>HttpOnly</code>的cookie，从某种程度上来说更安全，但是仍要小心CSRF和XSS的攻击。（尤其是CSRF，因为cookie会由浏览器自动发送，当被攻击者登陆了危险网站时，cookie可能会被无意间盗用）</p>
+<h3 id="5-2-利用-Local-Storgae"><a href="#5-2-利用-Local-Storgae" class="headerlink" title="5.2 利用 Local Storgae"></a>5.2 利用 Local Storgae</h3><p>另外一种（更常见）的方案是在Local Storage中存储JWT，然后由前端提取出来添加到请求的Authorization Header中发送。</p>
+<p>由于请求头中的信息不像cookie一样是由浏览器自动发送的，所以对<a href="https://duola8789.github.io/2017/11/06/01%20%E5%89%8D%E7%AB%AF%E7%AC%94%E8%AE%B0/08%20%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%8007%20HTTP%E5%AE%89%E5%85%A8/#CSRF" target="_blank" rel="noopener">CSRF</a>具有天然的防御，并且Local Storage的容量比Cookie大的多。</p>
+<p>它的缺点是，如果网站出现了XSS漏洞，那么攻击者可以极其轻松的获取到JWT，然后就可以伪造并且用户身份去实现攻击行为。</p>
+<h3 id="5-3-具体操作"><a href="#5-3-具体操作" class="headerlink" title="5.3 具体操作"></a>5.3 具体操作</h3><p>比较常见和稳妥的做法是：确保代码以及第三方库的代码有足够的XSS检查，在此之上将jwt存放在Local Storage中。前端具体的实现根据采用的Ajax工具不同有所不同：</p>
+<h4 id="（1）使用fetch发送"><a href="#（1）使用fetch发送" class="headerlink" title="（1）使用fetch发送"></a>（1）使用<code>fetch</code>发送</h4><p>发送jwt时一般是在请求头里加入<code>Authorization</code>，并加上<code>Bearer</code>标注：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fetch(<span class="string">'api/user/1'</span>, &#123;</span><br><span class="line">  headers: &#123;</span><br><span class="line">    <span class="string">'Authorization'</span>: <span class="string">'Bearer '</span> + token</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>服务端会验证token，如果验证通过就会返回相应的资源。</p>
+<h4 id="（2）使用axios发送"><a href="#（2）使用axios发送" class="headerlink" title="（2）使用axios发送"></a>（2）使用<code>axios</code>发送</h4><p>在Vue中经常使用<a href="https://www.axios.com/" target="_blank" rel="noopener">axios</a>来帮助我们处理网络请求，使用axios设置请求头如下</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">'axios'</span>;</span><br><span class="line"><span class="keyword">import</span> JsonWebToken <span class="keyword">from</span> <span class="string">'jsonwebtoken'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在登录成功后应该已经将token存到本机了</span></span><br><span class="line"><span class="keyword">const</span> token = sessionStorage.getItem(<span class="string">'userToken'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// iss是我们预先定义信息，用来识别token是我们所需要的token</span></span><br><span class="line"><span class="keyword">const</span> isTokenValid = !!(token &amp;&amp; JsonWebToken.decode(token) &amp;&amp; (JsonWebToken.decode(token).iss === config.userToken.iss));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果token有效</span></span><br><span class="line"><span class="keyword">if</span> (isTokenValid) &#123;</span><br><span class="line">  <span class="comment">// get请求</span></span><br><span class="line">  axios.get(<span class="string">'/api/user/deatil'</span>, &#123;</span><br><span class="line">    headers: &#123;</span><br><span class="line">      <span class="string">'Authorization'</span>: <span class="string">'Bearer '</span> + token,</span><br><span class="line">      <span class="string">'Cookie'</span> : <span class="string">'sessionId='</span> + sessionId + <span class="string">'; recId='</span> + recId,</span><br><span class="line">    &#125;</span><br><span class="line">    params: &#123;</span><br><span class="line">      param1: <span class="string">'string'</span>,</span><br><span class="line">      param2: <span class="string">'string'</span></span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// post请求</span></span><br><span class="line">  axios.post(<span class="string">'/api/user/deatil'</span>,</span><br><span class="line">    &#123;</span><br><span class="line">      data: &#123;<span class="attr">value1</span>: <span class="string">'value&#125;'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      headers: &#123;</span><br><span class="line">        <span class="string">'Authorization'</span>: <span class="string">'Bearer '</span> + token,</span><br><span class="line">        <span class="string">'Cookie'</span> : <span class="string">'sessionId='</span> + sessionId + <span class="string">'; recId='</span> + recId,</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 全局设定</span></span><br><span class="line">  axios.headers.common[<span class="string">'Authorization'</span>] = <span class="string">'Bearer '</span> + token</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="6-在Koa2中的应用"><a href="#6-在Koa2中的应用" class="headerlink" title="6 在Koa2中的应用"></a>6 在Koa2中的应用</h2><p><a href="https://www.npmjs.com/package/jsonwebtoken" target="_blank" rel="noopener">jsonwebtoken</a>是Node环境下JWT的实现，提供了一些API帮助我们快速的实现JWT的设计。</p>
+<p>安装：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install jsonwebtoken --save</span><br></pre></td></tr></table></figure>
+<h3 id="6-1-签发token（加密）"><a href="#6-1-签发token（加密）" class="headerlink" title="6.1 签发token（加密）"></a>6.1 签发token（加密）</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jwt.sign(payload, secretOrPrivateKey, [options, callback])</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>payload</code>：可以是<code>object</code>或者<code>string</code>或者<code>buffer</code>（<code>object</code>会被使用<code>JSON.stringify</code>方法转换为字符串）</li>
+<li><code>secretOrPrivateKey</code>：用来加密的密钥</li>
+<li><code>options</code>：<ul>
+<li><code>algorithm</code>：加密算法（默认值SH256）–（<code>alg</code>）</li>
+<li><code>expriesIn</code>：失效时间，数字默认单位为秒，字符串需指明时间单位，如<code>60</code>、<code>2 days</code>、<code>10h</code>、<code>7d</code>（如果是字符串并且没有单位，单位默认为毫秒）–（<code>exp</code>）</li>
+<li><code>notBefore</code>：生效时间，单位规则同<code>expriesInd</code>–（<code>nbf</code>）</li>
+<li><code>audience</code>：token的接受者–（<code>aud</code>）</li>
+<li><code>issuer</code>：签名的发行者–（<code>iss</code>）</li>
+<li><code>jwtid</code>：JWT的ID</li>
+<li><code>subject</code>：JWT的主题–（<code>sub</code>）</li>
+<li><code>noTimestamp</code>：不需要时间戳</li>
+<li><code>header</code>：头部信息</li>
+</ul>
+</li>
+<li><code>callback</code>：加密失败的回调函数</li>
+</ul>
+<p>生成一个有效期为1小时的token:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">jwt.sign(&#123;</span><br><span class="line">  data: <span class="string">'foobar'</span></span><br><span class="line">&#125;, <span class="string">'secret'</span>, &#123; <span class="attr">expiresIn</span>: <span class="number">60</span> * <span class="number">60</span> &#125;);</span><br><span class="line"></span><br><span class="line">jwt.sign(&#123;</span><br><span class="line">  data: <span class="string">'foobar'</span></span><br><span class="line">&#125;, <span class="string">'secret'</span>, &#123; <span class="attr">expiresIn</span>: <span class="string">'1h'</span> &#125;);</span><br></pre></td></tr></table></figure>
+<p>也可以用下面这种形式：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">jwt.sign(&#123;</span><br><span class="line">  exp: <span class="built_in">Math</span>.floor(<span class="built_in">Date</span>.now() / <span class="number">1000</span>) + (<span class="number">60</span> * <span class="number">60</span>),</span><br><span class="line">  data: <span class="string">'foobar'</span></span><br><span class="line">&#125;, <span class="string">'secret'</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="6-2-验证token"><a href="#6-2-验证token" class="headerlink" title="6.2 验证token"></a>6.2 验证token</h3><p>验证token的合法性：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jwt.verify（token，secretOrPublicKey，[options，callback]）</span><br></pre></td></tr></table></figure>
+<p>来看验证时的一些简单的用法，更详细的用法参考<a href="https://www.npmjs.com/package/jsonwebtoken" target="_blank" rel="noopener">官网</a>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 同步验证成功</span></span><br><span class="line"><span class="keyword">var</span> decoded = jwt.verify(token, <span class="string">'shhhhh'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(decoded.foo) <span class="comment">// bar</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 异步验证成功</span></span><br><span class="line">jwt.verify(token, <span class="string">'shhhhh'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err, decoded</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(decoded.foo) <span class="comment">// bar</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 同步验证失败--token无效</span></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="keyword">var</span> decoded = jwt.verify(token, <span class="string">'wrong-secret'</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span>(err) &#123;</span><br><span class="line">  <span class="comment">// err</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 异步验证失败--token无效</span></span><br><span class="line">jwt.verify(token, <span class="string">'wrong-secret'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err, decoded</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// err</span></span><br><span class="line">  <span class="comment">// decoded undefined</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="6-3-解码token的payload"><a href="#6-3-解码token的payload" class="headerlink" title="6.3 解码token的payload"></a>6.3 解码token的payload</h3><p>将payload解码，<strong>注意：这个过程无论验证是否通过都会执行</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">jwt.decode(token [, options])</span><br><span class="line"></span><br><span class="line"><span class="comment">// get the decoded payload ignoring signature, no secretOrPrivateKey needed</span></span><br><span class="line"><span class="keyword">var</span> decoded = jwt.decode(token);</span><br><span class="line"></span><br><span class="line"><span class="comment">// get the decoded payload and header</span></span><br><span class="line"><span class="keyword">var</span> decoded = jwt.decode(token, &#123;<span class="attr">complete</span>: <span class="literal">true</span>&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(decoded.header);</span><br><span class="line"><span class="built_in">console</span>.log(decoded.payload)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>token</code>：JWT的token</li>
+<li><code>options</code>：<ul>
+<li><code>json</code>：强制使用<code>JSON.parse()</code>机械payload，即使头信息中不包括<code>&quot;typ&quot;: &quot;JWT&quot;</code></li>
+<li><code>complete</code>：返回一个包含解码后的payload和对象</li>
+</ul>
+</li>
+</ul>
+<p>看一下例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 解码payload不关心签名，不需要提供私钥</span></span><br><span class="line"><span class="keyword">var</span> decoded = jwt.decode(token);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获得对象</span></span><br><span class="line"><span class="keyword">var</span> decoded = jwt.decode(token, &#123;<span class="attr">complete</span>: <span class="literal">true</span>&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(decoded.header);</span><br><span class="line"><span class="built_in">console</span>.log(decoded.payload)</span><br></pre></td></tr></table></figure>
+<h3 id="6-4-实际例子"><a href="#6-4-实际例子" class="headerlink" title="6.4 实际例子"></a>6.4 实际例子</h3><p>来看一个实际的例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> jwt = <span class="built_in">require</span>(<span class="string">'jsonwebtoken'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//密钥，不能暴露</span></span><br><span class="line"><span class="keyword">const</span> secret = <span class="string">'aaa'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// payload中不应该包含敏感信息</span></span><br><span class="line"><span class="keyword">const</span> payload = &#123;</span><br><span class="line">  username: <span class="string">'jay'</span>,</span><br><span class="line">  userId: <span class="number">123</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 选项（非必须）</span></span><br><span class="line"><span class="keyword">const</span> options = &#123;</span><br><span class="line">  expiresIn: <span class="number">60</span> * <span class="number">60</span> * <span class="number">24</span> <span class="comment">// 或者为"1d"</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 生成token</span></span><br><span class="line"><span class="keyword">const</span> token = jwt.sign(payload, secret, options)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 验证token</span></span><br><span class="line">jwt.verify(token, secret, <span class="function"><span class="keyword">function</span> (<span class="params">err, decoded</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 如果验证通过</span></span><br><span class="line">  <span class="keyword">if</span> (!err)&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(decoded.username);  <span class="comment">// 'jay'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="7-koa-jwt"><a href="#7-koa-jwt" class="headerlink" title="7 koa-jwt"></a>7 koa-jwt</h2><p>在Koa2中实现JWT的认证有中间件<a href="https://www.npmjs.com/package/koa-jwt" target="_blank" rel="noopener">koa-jwt</a>帮助我们完成，但是签发token的过程还是要安装上述过程，使用jsonwebtoken实现</p>
+<p>直接看一个简单的例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Koa <span class="keyword">from</span> <span class="string">'koa'</span>;</span><br><span class="line"><span class="keyword">import</span> jwt <span class="keyword">from</span> <span class="string">'koa-jwt'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Koa();</span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> KoaRouter();</span><br><span class="line"><span class="keyword">const</span> authRouter = auth.router;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 除了/public/之外的请求都需要经过JWT验证</span></span><br><span class="line">app.use(jwt(&#123; <span class="attr">secret</span>: <span class="string">'shared-secret'</span> &#125;).unless(&#123; <span class="attr">path</span>: [<span class="regexp">/^\/public/</span>] &#125;));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 无论请求中是否存在Authorization header都保证执行</span></span><br><span class="line">app.use(jwt(&#123; <span class="attr">secret</span>: <span class="string">'shared-secret'</span>, <span class="attr">passthrough</span>: <span class="literal">true</span> &#125;));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 所有走/api/打头的请求都需要经过JWT验证</span></span><br><span class="line">router.use(<span class="string">'/api'</span>, jwt(&#123; <span class="attr">secret</span>: <span class="string">'shared-secret'</span> &#125;), apiRouter.routes());</span><br></pre></td></tr></table></figure>
+<h2 id="8-JWT的缺点和适用场景"><a href="#8-JWT的缺点和适用场景" class="headerlink" title="8 JWT的缺点和适用场景"></a>8 JWT的缺点和适用场景</h2><p><a href="https://www.guonanjun.com/220.html" target="_blank" rel="noopener">这篇文章</a>提出了一些自己观点，可以参考一下，它认为jwt的token方案最适合的场景是无状态的场景，若需要考虑token注销和某些token续签的场景，实际上就是给token加上了状态，这就类似于传统的方案了，但是相比传统方案的优势是，服务端可以不用长期保存用户状态，仅仅在一定时间段内保留一小部分状态即可。</p>
+<h2 id="9-总结"><a href="#9-总结" class="headerlink" title="9 总结"></a>9 总结</h2><p>JWT的优点如下：</p>
+<ol>
+<li>因为JSON的通用性，所以JWT是可以跨语言支持的</li>
+<li>因为有了payload部分，所以JWT可以在自身存储一些其他业务逻辑所必要的非敏感信息</li>
+<li>JWT体积很小，便于传输</li>
+<li>不需要在服务端保存回话信息，所以易于应用的扩展</li>
+</ol>
+<p>在安全方面需要注意：</p>
+<ol>
+<li>不应该在payload部分存放敏感信息，因为该部分是非加密的</li>
+<li>保护好secret私钥，不应该暴露给客户端</li>
+<li>应该使用https协议</li>
+</ol>
+<p>Koa2中的具体实现：</p>
+<ol>
+<li>签发token使用jsonwebtoken</li>
+<li>验证token使用koa-jwt中间件</li>
+</ol>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://www.jianshu.com/p/576dbf44b2ae" target="_blank" rel="noopener">什么是 JWT – JSON WEB TOKEN@简书</a></li>
+<li>J<a href="http://blog.leapoahead.com/2015/09/06/understanding-jwt/" target="_blank" rel="noopener">SON Web Token - 在Web应用间安全地传递信息@回田园</a></li>
+<li><a href="http://blog.leapoahead.com/2015/09/07/user-authentication-with-jwt/?utm_source=tuicool&amp;utm_medium=referral" target="_blank" rel="noopener">八幅漫画理解使用JSON Web Token设计单点登录系统@回田园</a></li>
+<li><a href="https://www.jianshu.com/p/a7882080c541" target="_blank" rel="noopener">Node JWT/jsonwebtoken 使用与原理分析@简书</a></li>
+<li><a href="https://juejin.im/entry/5993a030f265da24941202c2" target="_blank" rel="noopener">讲真，别再使用JWT了！@掘金</a></li>
+<li><a href="https://juejin.im/post/5dbef6dc6fb9a0206e1fee35" target="_blank" rel="noopener">如何安全储存JWT之Cookie与Web Storage@掘金</a></li>
+</ul>
+
+      
+    </div>
+
+    
+      
+
+
+    
+
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+  <img id="wechat_subscriber_qcode" src="/images/wechat-qcode.jpg" alt="哆啦斯基周 wechat" style="width: 200px; max-width: 100%;">
+  <div>我的公众号，看心情更新，欢迎订阅！</div>
+</div>
+
+      </div>
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JWT/" rel="tag"># JWT</a>
+          
+            <a href="/tags/Json-Web-Token/" rel="tag"># Json Web Token</a>
+          
+            <a href="/tags/登陆/" rel="tag"># 登陆</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/06/01 前端笔记/08 网络基础/网络基础16 携带Cookie跨域/" rel="next" title="网络基础16 携带Cookie跨域">
+                <i class="fa fa-chevron-left"></i> 网络基础16 携带Cookie跨域
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/08/01 前端笔记/02 JavaScript/JS34 文件上传前实时预览/" rel="prev" title="JS34 文件上传前实时预览">
+                JS34 文件上传前实时预览 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar3.png" alt="哆啦斯基周">
+            
+              <p class="site-author-name" itemprop="name">哆啦斯基周</p>
+              <p class="site-description motion-element" itemprop="description">一个大龄前端程序员的技术博客</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">185</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">27</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">269</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/duola8789" title="GitHub &rarr; https://github.com/duola8789" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                  
+                    
+                  
+                  <a href="mailto:duola8789@126.com" title="E-Mail &rarr; mailto:duola8789@126.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                  
+                    
+                  
+                  <a href="https://weibo.com/zhouhaozhouhao" title="Weibo &rarr; https://weibo.com/zhouhaozhouhao" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                  
+                    
+                  
+                  <a href="https://blog.csdn.net/duola8789" title="CSDN &rarr; https://blog.csdn.net/duola8789" rel="noopener" target="_blank"><i class="fa fa-fw fa-rss-square"></i></a>
+                </span>
+              
+            </div>
+          
+
+          
+             <div class="cc-license motion-element" itemprop="license">
+              
+                
+              
+              
+              
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+             </div>
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#利用JWT实现登录"><span class="nav-number">1.</span> <span class="nav-text">利用JWT实现登录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-什么是JWT"><span class="nav-number">1.1.</span> <span class="nav-text">1 什么是JWT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-传统的session认证"><span class="nav-number">1.2.</span> <span class="nav-text">2 传统的session认证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-基于token的鉴权机制"><span class="nav-number">1.3.</span> <span class="nav-text">3 基于token的鉴权机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-JWT的构成"><span class="nav-number">1.4.</span> <span class="nav-text">4 JWT的构成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-header"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1 header</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-payload"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2 payload</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-signature"><span class="nav-number">1.4.3.</span> <span class="nav-text">4.3 signature</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-如何存储发送JWT"><span class="nav-number">1.5.</span> <span class="nav-text">5 如何存储发送JWT</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-利用Cookie"><span class="nav-number">1.5.1.</span> <span class="nav-text">5.1 利用Cookie</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-利用-Local-Storgae"><span class="nav-number">1.5.2.</span> <span class="nav-text">5.2 利用 Local Storgae</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-具体操作"><span class="nav-number">1.5.3.</span> <span class="nav-text">5.3 具体操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#（1）使用fetch发送"><span class="nav-number">1.5.3.1.</span> <span class="nav-text">（1）使用fetch发送</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（2）使用axios发送"><span class="nav-number">1.5.3.2.</span> <span class="nav-text">（2）使用axios发送</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-在Koa2中的应用"><span class="nav-number">1.6.</span> <span class="nav-text">6 在Koa2中的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-签发token（加密）"><span class="nav-number">1.6.1.</span> <span class="nav-text">6.1 签发token（加密）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-验证token"><span class="nav-number">1.6.2.</span> <span class="nav-text">6.2 验证token</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3-解码token的payload"><span class="nav-number">1.6.3.</span> <span class="nav-text">6.3 解码token的payload</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-4-实际例子"><span class="nav-number">1.6.4.</span> <span class="nav-text">6.4 实际例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-koa-jwt"><span class="nav-number">1.7.</span> <span class="nav-text">7 koa-jwt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-JWT的缺点和适用场景"><span class="nav-number">1.8.</span> <span class="nav-text">8 JWT的缺点和适用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-总结"><span class="nav-number">1.9.</span> <span class="nav-text">9 总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">1.10.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">哆啦斯基周</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动</div>
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.7.0"></script>
+
+  <script src="/js/src/motion.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.7.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.7.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+
+
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function (item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'Fg5UsXV9f7m1xb1SioXny6QN-gzGzoHsz',
+    appKey: 'DLV7a4oTpQynJCIelKn3L7Ja',
+    placeholder: '大侠留步，请留下您宝贵的意见',
+    avatar: 'retro',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+</script>
+
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
