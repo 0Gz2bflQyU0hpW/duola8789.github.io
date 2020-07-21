@@ -1,0 +1,2036 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=6.7.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=6.7.0">
+
+
+  <link rel="mask-icon" href="/images/logo-new.svg?v=6.7.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.7.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Grid布局学习笔记。">
+<meta name="keywords" content="Grid,多列布局">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTML+CSS06 Grid布局">
+<meta property="og:url" content="http://oldzhou.cn/2017/12/11/01 前端笔记/09 HTML+CSS/HTML+CSS06 Grid布局/index.html">
+<meta property="og:site_name" content="不负好时光">
+<meta property="og:description" content="Grid布局学习笔记。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://image.oldzhou.cn/FuwPGoJYZFJH0g7r5cpcWXxIpbmT">
+<meta property="og:image" content="http://image.oldzhou.cn/FnUw1EpSCGXtbPn0TASA2q8uhDou">
+<meta property="og:image" content="http://image.oldzhou.cn/FnvaUaKlNcTXgaHDpfikqqh94a24">
+<meta property="og:image" content="http://image.oldzhou.cn/FnvaUaKlNcTXgaHDpfikqqh94a24">
+<meta property="og:image" content="http://image.oldzhou.cn/Fue2PE4FOCikX_lnBZB_RLPIXMfQ">
+<meta property="og:image" content="http://image.oldzhou.cn/FlS1MvvKYe-wawnI47Yt6izqpbHK">
+<meta property="og:image" content="http://image.oldzhou.cn/Fkv7TrbYJ-skBy-Uzy-nRFNLj3tt">
+<meta property="og:image" content="http://image.oldzhou.cn/Fq9KPSu_1mwieFs2gtJu1nJvq_vN">
+<meta property="og:image" content="http://image.oldzhou.cn/FlyHTrES_bCbU5i8N9lCDHrdSIqp">
+<meta property="og:image" content="http://image.oldzhou.cn/Fh00YMqYp-oh7e99V7rJLNP7UYyy">
+<meta property="og:image" content="http://image.oldzhou.cn/Fol4hp_uhmIsuES71iuI7JOQC4wY">
+<meta property="og:updated_time" content="2020-07-21T17:09:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HTML+CSS06 Grid布局">
+<meta name="twitter:description" content="Grid布局学习笔记。">
+<meta name="twitter:image" content="http://image.oldzhou.cn/FuwPGoJYZFJH0g7r5cpcWXxIpbmT">
+
+
+
+
+
+
+  <link rel="canonical" href="http://oldzhou.cn/2017/12/11/01 前端笔记/09 HTML+CSS/HTML+CSS06 Grid布局/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>HTML+CSS06 Grid布局 | 不负好时光</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">不负好时光</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">没什么才华，就剩一点坚持</h1>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="http://www.oldzhou.cn/pages/page1.html" rel="noopener" target="_blank"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://oldzhou.cn/2017/12/11/01 前端笔记/09 HTML+CSS/HTML+CSS06 Grid布局/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="哆啦斯基周">
+      <meta itemprop="description" content="一个大龄前端程序员的技术博客">
+      <meta itemprop="image" content="/images/avatar3.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="不负好时光">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">HTML+CSS06 Grid布局
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+         
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2017-12-11 10:40:58" itemprop="dateCreated datePublished" datetime="2017-12-11T10:40:58+00:00">2017-12-11</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-07-21 17:09:50" itemprop="dateModified" datetime="2020-07-21T17:09:50+00:00">2020-07-21</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/HTML-CSS/" itemprop="url" rel="index"><span itemprop="name">HTML+CSS</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/12/11/01 前端笔记/09 HTML+CSS/HTML+CSS06 Grid布局/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">评论数：</span> <span class="post-comments-count valine-comment-count" data-xid="/2017/12/11/01 前端笔记/09 HTML+CSS/HTML+CSS06 Grid布局/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Grid布局学习笔记。</p>
+<a id="more"></a>
+<h1 id="与Flex的比较"><a href="#与Flex的比较" class="headerlink" title="与Flex的比较"></a>与Flex的比较</h1><p>Flexbox是一维布局系统，适合做局部布局，比如导航栏组件。Grid是二维布局系统，通常用于整个页面的规划。</p>
+<p>二者从应用场景来说并不冲突。虽然Flexbox也可以用于大的页面布局，但是没有Grid强大和灵活。二者结合使用更加轻松。</p>
+<h1 id="兼容性"><a href="#兼容性" class="headerlink" title="兼容性"></a>兼容性</h1><p>兼容性并不乐观，虽然至2017年3月，许多浏览器都提供了对 CSS Grid 的原生支持，但是都体现在比较新版本上：</p>
+<p><img src="http://image.oldzhou.cn/FuwPGoJYZFJH0g7r5cpcWXxIpbmT" alt=""></p>
+<h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><p>Grid容器里面，水平区域成为行，垂直区域称为列，行和列的交叉区域成为单元格（cell）。正常情况下<code>n</code>行<code>m</code>列会产生<code>n x m</code>个单元格。</p>
+<p>划分网格的线就成为网格线，<code>n</code>行有<code>n+1</code>根水平网格线，<code>m</code>列有<code>m+1</code>根垂直网格线</p>
+<p><img src="http://image.oldzhou.cn/FnUw1EpSCGXtbPn0TASA2q8uhDou" alt=""></p>
+<p>一个<code>4x4</code>的网格，共有5根水平网格线和5根垂直网格线</p>
+<h1 id="容器属性"><a href="#容器属性" class="headerlink" title="容器属性"></a>容器属性</h1><h2 id="改变容器"><a href="#改变容器" class="headerlink" title="改变容器"></a>改变容器</h2><p>使用<code>display: grid</code>指定容器采用网格布局（或者使用<code>display: linline-grid</code>指定容器采用行内网格布局）。</p>
+<p>设为网格布局后，容器子元素的<code>float</code>、<code>display: inline-block</code>、<code>display: tabel-cell</code>、<code>vertical-align</code>和<code>column-*</code>设置都会失效</p>
+<h2 id="划分网格"><a href="#划分网格" class="headerlink" title="划分网格"></a>划分网格</h2><p>容器指定了网格布局后需要划分行和列：</p>
+<ul>
+<li><code>grid-template-columns</code>属性定义每一列的列宽</li>
+<li><code>grid-template-rows</code>属性定义每一行的行高</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.container</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: grid;</span><br><span class="line">  <span class="attribute">grid-template-columns</span>: <span class="number">100px</span> <span class="number">100px</span> <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">grid-template-rows</span>: <span class="number">100px</span> <span class="number">100px</span> <span class="number">100px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码将容器划分为三行散列的网格，列宽和行高都是<code>100px</code></p>
+<p><img src="http://image.oldzhou.cn/FnvaUaKlNcTXgaHDpfikqqh94a24" alt=""></p>
+<h3 id="fr关键字"><a href="#fr关键字" class="headerlink" title="fr关键字"></a><code>fr</code>关键字</h3><p>划分网格的宽度单位除了是<code>px</code>、百分比等常规单位之外，也可以使用<code>fr</code>关键字，如果两列的宽度是<code>1fr</code>和<code>2fr</code>，那么代码后者的宽度是前者的两倍</p>
+<p>如果同时使用<code>px</code>和<code>fr</code>时，使用<code>fr</code>的宽度会将剩余的宽度都充满</p>
+<h3 id="repeat函数"><a href="#repeat函数" class="headerlink" title="repeat函数"></a><code>repeat</code>函数</h3><p>可以使用<code>repeat</code>函数来书写重复的值，它接受两个参数，第一个是重复的次数，第二个是重复的值</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.container</span> &#123;</span><br><span class="line">  <span class="attribute">grid-template-columns</span>: <span class="built_in">repeat</span>(2, 100px 20px 80px);</span><br><span class="line">  <span class="comment">/* 等于 grid-template-columns: 100px 20px 80px 100px 20px 80px */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="auto-fill关键字"><a href="#auto-fill关键字" class="headerlink" title="auto-fill关键字"></a><code>auto-fill</code>关键字</h3><p>在使用<code>repeat</code>函数时，可以使用<code>auto-fill</code>关键字，表明在容器大小不确定时，希望每一行或者每一列容纳尽可能多的单元格</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.container</span> &#123;</span><br><span class="line">  <span class="attribute">grid-template-columns</span>: <span class="built_in">repeat</span>(auto-fill, 100px);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码表示每列宽度是<code>100px</code>，然后自动填充，直到不能放置更多的列</p>
+<h3 id="网格线名称"><a href="#网格线名称" class="headerlink" title="网格线名称"></a>网格线名称</h3><p><code>grid-template-columns</code>属性和<code>grid-template-rows</code>属性里面，可以使用<code>[]</code>指定每一根网格线的名字，方便后面引用</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.container</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: grid;</span><br><span class="line">  <span class="attribute">grid-template-columns</span>: [a] <span class="number">50%</span> [b] <span class="number">50%</span> [c];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码，将列的网格线分别命名为<code>a</code>、<code>b</code>、<code>c</code>，后面引用的时候可以直接使用名称</p>
+<h2 id="网格间距"><a href="#网格间距" class="headerlink" title="网格间距"></a>网格间距</h2><ul>
+<li><code>grid-row-gap</code>，设置行间距</li>
+<li><code>grid-column-gap</code>，设置列间距</li>
+<li><code>grid-gap</code>，是上面两者的缩写</li>
+</ul>
+<p><code>grid-gap</code>需要两个参数：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.container</span> &#123;</span><br><span class="line">  <span class="attribute">grid-gap</span>: <span class="number">20px</span> <span class="number">20px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果省略的第二个值，浏览器认为第二个值等于第一个值</p>
+<blockquote>
+<p>最新的标准中，上面三个属性的<code>grid-</code>前缀都已经删除，直接使用<code>row-gap</code>、<code>column-gap</code>、<code>gap</code>即可</p>
+</blockquote>
+<h2 id="划分区域"><a href="#划分区域" class="headerlink" title="划分区域"></a>划分区域</h2><p>使用<code>grid-template-areas</code>将一个网格的划分成为各个命名的区域，一个区域由单个或多个单元格组成：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.container</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: grid;</span><br><span class="line">  <span class="attribute">grid-template-columns</span>: <span class="number">100px</span> <span class="number">100px</span> <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">grid-template-rows</span>: <span class="number">100px</span> <span class="number">100px</span> <span class="number">100px</span>;</span><br><span class="line">  <span class="attribute">grid-template-areas</span>: <span class="string">'a b c'</span></span><br><span class="line">                       <span class="string">'d e f'</span></span><br><span class="line">                       <span class="string">'g h i'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>要注意的是，<code>grid-template-areas</code>的属性包含的区域数量一定要和网格划分后的总数一致。上面的代码会划分出9个单元格，然后将其命名为<code>a</code>到<code>i</code>的九个区域，分别对应多个单元格</p>
+<p>多个单元格合并为一个时使用同一个命名即可（注意，不相邻的单元格不可以使用同一个命名）</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.container</span> &#123;</span><br><span class="line">  <span class="attribute">grid-template-areas</span>: <span class="string">'a a a'</span></span><br><span class="line">                       <span class="string">'b b b'</span></span><br><span class="line">                       <span class="string">'c c c'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果某些区域用不到，使用<code>.</code>表示：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.container</span> &#123;</span><br><span class="line">  <span class="attribute">grid-template-areas</span>: <span class="string">'a . a'</span></span><br><span class="line">                       <span class="string">'b b b'</span></span><br><span class="line">                       <span class="string">'c c .'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对区域的命名会影响到网格线，每个区域的起始网格线会命名为<code>区域名-start</code>，终止网格线会自动命名为<code>区域名-end</code></p>
+<h2 id="网格填充顺序"><a href="#网格填充顺序" class="headerlink" title="网格填充顺序"></a>网格填充顺序</h2><p>划分网格之后，容器的子元素会按照顺序放到每一个网格，默认的放置顺序是<code>先行后列</code>，即先填满第一行，再开始放入第二行</p>
+<p><img src="http://image.oldzhou.cn/FnvaUaKlNcTXgaHDpfikqqh94a24" alt=""></p>
+<p><code>grid-auto-flow</code>属性决定了这个顺序，默认取值是<code>row</code>，即先行后列的顺序进行放置，其他取值有：</p>
+<ul>
+<li><code>column</code>，先列后行</li>
+<li><code>row dense</code></li>
+<li><code>column dense</code></li>
+</ul>
+<p>后两个取值用于指定如果出现剩余空间后如何摆放，例如<code>1</code>和<code>2</code>各占两个单元格，在默认情况下第一行会出现空格：</p>
+<p><img src="http://image.oldzhou.cn/Fue2PE4FOCikX_lnBZB_RLPIXMfQ" alt=""></p>
+<p>如果修改为<code>row dense</code>，表示先行后列，并且尽可能紧密填满，尽量不出现空格，这时候<code>3</code>就会部位到第一行</p>
+<p><img src="http://image.oldzhou.cn/FlS1MvvKYe-wawnI47Yt6izqpbHK" alt=""></p>
+<h2 id="单元格内容对齐"><a href="#单元格内容对齐" class="headerlink" title="单元格内容对齐"></a>单元格内容对齐</h2><ul>
+<li><code>justify-items</code>，设置单元格内容水平位置，取值<code>start</code>/<code>end</code>/<code>center</code>/<code>center</code></li>
+<li><code>align-items</code>，设置单元格内容的垂直位置，取值<code>start</code>/<code>end</code>/<code>center</code>/<code>center</code></li>
+<li><code>place-items</code>，上面两个属性的缩写，如果省略第二个值认为与第一个值相等</li>
+</ul>
+<p><code>justify-items</code>取<code>start</code>时：</p>
+<p><img src="http://image.oldzhou.cn/Fkv7TrbYJ-skBy-Uzy-nRFNLj3tt" alt=""></p>
+<h2 id="容器对齐"><a href="#容器对齐" class="headerlink" title="容器对齐"></a>容器对齐</h2><ul>
+<li><code>justify-content</code>，设置整个内容区域在容器里面的水平位置，取值<code>start</code>/<code>end</code>/<code>space-around</code>/<code>space-between</code>/<code>space-evenly</code></li>
+<li><code>align-content</code>，设置整个内容区域在容器里面的垂直位置，取值<code>start</code>/<code>end</code>/<code>space-around</code>/<code>space-between</code>/<code>space-evenly</code></li>
+</ul>
+<p><code>justify-content</code>取<code>start</code>时：</p>
+<p><img src="http://image.oldzhou.cn/Fq9KPSu_1mwieFs2gtJu1nJvq_vN" alt=""></p>
+<p><code>justify-content</code>取<code>space-between</code>时：</p>
+<p><img src="http://image.oldzhou.cn/FlyHTrES_bCbU5i8N9lCDHrdSIqp" alt=""></p>
+<h2 id="缩写"><a href="#缩写" class="headerlink" title="缩写"></a>缩写</h2><p><code>grid-template</code>属性<code>grid-template-columns</code>、<code>grid-template-rows</code>和<code>grid-template-areas</code>这三个属性的合并简写形式。</p>
+<p><code>grid</code>属性是<code>grid-template-rows</code>、<code>grid-template-columns</code>、<code>grid-template-areas</code>、 <code>grid-auto-rows</code>、<code>grid-auto-columns</code>、<code>grid-auto-flow</code>这六个属性的合并简写形式。</p>
+<h1 id="项目属性"><a href="#项目属性" class="headerlink" title="项目属性"></a>项目属性</h1><h2 id="分配网格"><a href="#分配网格" class="headerlink" title="分配网格"></a>分配网格</h2><ul>
+<li><code>grid-column-start</code>，左边框所在的垂直网格线</li>
+<li><code>grid-column-end</code>，右边框所在的垂直网格线</li>
+<li><code>grid-row-start</code>，上边框所在的水平网格线</li>
+<li><code>grid-row-end</code>，下边框所在的水平网格线</li>
+</ul>
+<p>通过这一组属性，指明网格的起始位置，取值可以指定为第几根网格线（从<code>1</code>开始），也可以使用之前网格线的命名网格线</p>
+<p>属性取值还可以使用<code>span</code>关键字，表示跨越，及这个单元格跨越多少网格，如果出现重叠使用<code>z-index</code>指定重叠顺序</p>
+<p>一般情况下我习惯使用下面的两个缩写来分配项目占据的网格：</p>
+<ul>
+<li><code>grid-column</code>，<code>grid-column-start</code>和<code>grid-column-end</code>的合并简写形式</li>
+<li><code>grid-row</code>，<code>grid-row-start</code>属性和<code>grid-row-end</code>的合并简写形式</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.item-1</span> &#123;</span><br><span class="line">  <span class="attribute">grid-column</span>: <span class="number">1</span> / <span class="number">3</span>;</span><br><span class="line">  <span class="attribute">grid-row</span>: <span class="number">1</span> / <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 等同于 */</span></span><br><span class="line"><span class="selector-class">.item-1</span> &#123;</span><br><span class="line">  <span class="attribute">grid-column-start</span>: <span class="number">1</span>;</span><br><span class="line">  <span class="attribute">grid-column-end</span>: <span class="number">3</span>;</span><br><span class="line">  <span class="attribute">grid-row-start</span>: <span class="number">1</span>;</span><br><span class="line">  <span class="attribute">grid-row-end</span>: <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>缩写方式中仍然可以使用命名网格线和<code>span</code>关键字</p>
+<p>如果省略<code>/</code>及后面的部分，则默认跨域一个网格</p>
+<h2 id="分配区域"><a href="#分配区域" class="headerlink" title="分配区域"></a>分配区域</h2><p><code>grad-ared</code>属性指定项目放在哪个区域，取值就是之前在<code>grid-template-areas</code>中指定的区域名。它还可以作为<code>grid-row-start</code>、<code>grid-column-start</code>、<code>grid-row-end</code>、<code>grid-column-end</code>的合并简写：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.item-1</span> &#123;</span><br><span class="line">  <span class="attribute">grid-area</span>: <span class="number">1</span> / <span class="number">1</span> / <span class="number">3</span> / <span class="number">3</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="指定项目位置"><a href="#指定项目位置" class="headerlink" title="指定项目位置"></a>指定项目位置</h2><ul>
+<li><code>justify-self</code>，设置单元格内容的水平位置，与<code>justify-items</code>属性用法一致，但只作用于的单个项目</li>
+<li><code>align-self</code>，设置单元格内容的垂直位置，与<code>align-items</code>属性用法一致，但只作用于的单个项目</li>
+<li><code>place-self</code>，上面二者的缩写</li>
+</ul>
+<h1 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h1><h2 id="两栏布局"><a href="#两栏布局" class="headerlink" title="两栏布局"></a>两栏布局</h2><p><img src="http://image.oldzhou.cn/Fh00YMqYp-oh7e99V7rJLNP7UYyy" alt=""></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">      * &#123;</span></span><br><span class="line"><span class="undefined">        box-sizing: border-box;</span></span><br><span class="line"><span class="undefined">        margin: 0;</span></span><br><span class="line"><span class="undefined">        padding: 0;</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">      html,</span></span><br><span class="line"><span class="undefined">      body &#123;</span></span><br><span class="line"><span class="undefined">        width: 100%;</span></span><br><span class="line"><span class="undefined">        height: 100%;</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="css">      <span class="selector-class">.container</span> &#123;</span></span><br><span class="line"><span class="undefined">        height: 100%;</span></span><br><span class="line"><span class="undefined">        display: grid;</span></span><br><span class="line"><span class="undefined">        grid-template-columns: 200px 1fr;</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="css">      <span class="selector-class">.left</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">background</span>: <span class="selector-id">#0bc1ff</span>;</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="css">      <span class="selector-class">.right</span> &#123;</span></span><br><span class="line"><span class="css">        <span class="selector-tag">background</span>: <span class="selector-id">#b8c885</span>;</span></span><br><span class="line"><span class="undefined">      &#125;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"left"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"right"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="圣杯布局"><a href="#圣杯布局" class="headerlink" title="圣杯布局"></a>圣杯布局</h2><p><img src="http://image.oldzhou.cn/Fol4hp_uhmIsuES71iuI7JOQC4wY" alt=""></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"head"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"middle-left"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"middle-right"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"bottom"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>可以使用网格线来实现：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.container</span> &#123;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">  <span class="attribute">display</span>: grid;</span><br><span class="line">  <span class="attribute">grid-template-columns</span>: [a] <span class="number">50%</span> [b] <span class="number">50%</span> [c];</span><br><span class="line">  <span class="attribute">grid-template-rows</span>: <span class="number">80px</span> <span class="number">1</span>fr <span class="number">80px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.head</span> &#123;</span><br><span class="line">  <span class="attribute">grid-column</span>: a/c;</span><br><span class="line">  <span class="attribute">grid-row</span>: <span class="number">1</span>/<span class="number">2</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#0bc1ff</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.middle-left</span> &#123;</span><br><span class="line">  <span class="attribute">grid-column</span>: a/b;</span><br><span class="line">  <span class="attribute">grid-row</span>: <span class="number">2</span>/<span class="number">3</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#4b0560</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.middle-right</span> &#123;</span><br><span class="line">  <span class="attribute">grid-column</span>: b/c;</span><br><span class="line">  <span class="attribute">grid-row</span>: <span class="number">2</span>/<span class="number">3</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#257c2b</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.bottom</span> &#123;</span><br><span class="line">  <span class="attribute">grid-column</span>: a/c;</span><br><span class="line">  <span class="attribute">grid-row</span>: <span class="number">3</span>/<span class="number">4</span>;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#917551</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>也可以使用区域来实现：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.container</span> &#123;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">  <span class="attribute">display</span>: grid;</span><br><span class="line">  <span class="attribute">grid-template-columns</span>: <span class="number">50%</span> <span class="number">50%</span>;</span><br><span class="line">  <span class="attribute">grid-template-rows</span>: <span class="number">80px</span> <span class="number">1</span>fr <span class="number">80px</span>;</span><br><span class="line">  <span class="attribute">grid-template-areas</span>:</span><br><span class="line">    <span class="string">'a a'</span></span><br><span class="line">    <span class="string">'c a'</span></span><br><span class="line">    <span class="string">'e e'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.head</span> &#123;</span><br><span class="line">  <span class="attribute">grid-area</span>: a;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#0bc1ff</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.middle-left</span> &#123;</span><br><span class="line">  <span class="attribute">grid-area</span>: c;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#4b0560</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.middle-right</span> &#123;</span><br><span class="line">  <span class="attribute">grid-area</span>: d;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#257c2b</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.bottom</span> &#123;</span><br><span class="line">  <span class="attribute">grid-area</span>: e;</span><br><span class="line">  <span class="attribute">background</span>: <span class="number">#917551</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a href="https://www.ruanyifeng.com/blog/2019/03/grid-layout-tutorial.html" target="_blank" rel="noopener">CSS Grid 网格布局教程@阮一峰的网络日志</a></li>
+<li><a href="http://www.css88.com/archives/8506" target="_blank" rel="noopener">分钟学会 CSS Grid 布局@HTML中文网</a></li>
+</ul>
+
+      
+    </div>
+
+    
+      
+
+
+    
+
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+  <img id="wechat_subscriber_qcode" src="/images/wechat-qcode.jpg" alt="哆啦斯基周 wechat" style="width: 200px; max-width: 100%;">
+  <div>我的公众号，看心情更新，欢迎订阅！</div>
+</div>
+
+      </div>
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Grid/" rel="tag"># Grid</a>
+          
+            <a href="/tags/多列布局/" rel="tag"># 多列布局</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/08/01 前端笔记/05 算法/02 算法练习/算法练习01 数组乱序/" rel="next" title="算法练习01 数组乱序">
+                <i class="fa fa-chevron-left"></i> 算法练习01 数组乱序
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/22/01 前端笔记/07 零散专题/零散专题20 Axios/" rel="prev" title="零散专题20 Axios">
+                零散专题20 Axios <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar3.png" alt="哆啦斯基周">
+            
+              <p class="site-author-name" itemprop="name">哆啦斯基周</p>
+              <p class="site-description motion-element" itemprop="description">一个大龄前端程序员的技术博客</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">188</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">27</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">272</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/duola8789" title="GitHub &rarr; https://github.com/duola8789" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                  
+                    
+                  
+                  <a href="mailto:duola8789@126.com" title="E-Mail &rarr; mailto:duola8789@126.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                  
+                    
+                  
+                  <a href="https://weibo.com/zhouhaozhouhao" title="Weibo &rarr; https://weibo.com/zhouhaozhouhao" rel="noopener" target="_blank"><i class="fa fa-fw fa-weibo"></i></a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                  
+                    
+                  
+                  <a href="https://blog.csdn.net/duola8789" title="CSDN &rarr; https://blog.csdn.net/duola8789" rel="noopener" target="_blank"><i class="fa fa-fw fa-rss-square"></i></a>
+                </span>
+              
+            </div>
+          
+
+          
+             <div class="cc-license motion-element" itemprop="license">
+              
+                
+              
+              
+              
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+             </div>
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#与Flex的比较"><span class="nav-number">1.</span> <span class="nav-text">与Flex的比较</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#兼容性"><span class="nav-number">2.</span> <span class="nav-text">兼容性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基本概念"><span class="nav-number">3.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#容器属性"><span class="nav-number">4.</span> <span class="nav-text">容器属性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#改变容器"><span class="nav-number">4.1.</span> <span class="nav-text">改变容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#划分网格"><span class="nav-number">4.2.</span> <span class="nav-text">划分网格</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#fr关键字"><span class="nav-number">4.2.1.</span> <span class="nav-text">fr关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#repeat函数"><span class="nav-number">4.2.2.</span> <span class="nav-text">repeat函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#auto-fill关键字"><span class="nav-number">4.2.3.</span> <span class="nav-text">auto-fill关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网格线名称"><span class="nav-number">4.2.4.</span> <span class="nav-text">网格线名称</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网格间距"><span class="nav-number">4.3.</span> <span class="nav-text">网格间距</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#划分区域"><span class="nav-number">4.4.</span> <span class="nav-text">划分区域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网格填充顺序"><span class="nav-number">4.5.</span> <span class="nav-text">网格填充顺序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单元格内容对齐"><span class="nav-number">4.6.</span> <span class="nav-text">单元格内容对齐</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#容器对齐"><span class="nav-number">4.7.</span> <span class="nav-text">容器对齐</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#缩写"><span class="nav-number">4.8.</span> <span class="nav-text">缩写</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#项目属性"><span class="nav-number">5.</span> <span class="nav-text">项目属性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分配网格"><span class="nav-number">5.1.</span> <span class="nav-text">分配网格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分配区域"><span class="nav-number">5.2.</span> <span class="nav-text">分配区域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指定项目位置"><span class="nav-number">5.3.</span> <span class="nav-text">指定项目位置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实例"><span class="nav-number">6.</span> <span class="nav-text">实例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#两栏布局"><span class="nav-number">6.1.</span> <span class="nav-text">两栏布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#圣杯布局"><span class="nav-number">6.2.</span> <span class="nav-text">圣杯布局</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">哆啦斯基周</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动</div>
+
+
+
+
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.7.0"></script>
+
+  <script src="/js/src/motion.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.7.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.7.0"></script>
+
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+
+
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function (item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'Fg5UsXV9f7m1xb1SioXny6QN-gzGzoHsz',
+    appKey: 'DLV7a4oTpQynJCIelKn3L7Ja',
+    placeholder: '大侠留步，请留下您宝贵的意见',
+    avatar: 'retro',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+</script>
+
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
